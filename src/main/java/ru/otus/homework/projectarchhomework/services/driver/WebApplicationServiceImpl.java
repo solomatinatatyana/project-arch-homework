@@ -1,4 +1,4 @@
-package ru.otus.homework.projectarchhomework.config.ui;
+package ru.otus.homework.projectarchhomework.services.driver;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.MutableCapabilities;
@@ -8,26 +8,16 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.remote.CapabilityType;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
+import ru.otus.homework.projectarchhomework.config.ui.BrowserType;
 
 import java.util.Arrays;
 
-public class WebDriverFactory {
-    public static WebDriver createNewDriver(BrowserType browser){
-        WebDriver driver = null;
-        switch (browser){
-            case CHROME:
-                WebDriverManager.chromedriver().setup();
-                driver = new ChromeDriver();
-                break;
-            case FIREFOX:
-                WebDriverManager.firefoxdriver().setup();
-                driver = new FirefoxDriver();
-                break;
-        }
-        return driver;
-    }
-
-    public static WebDriver createNewDriver(BrowserType browser, MutableCapabilities options){
+@Service
+public class WebApplicationServiceImpl implements WebApplicationService {
+    @Override
+    public WebDriver initDriver(BrowserType browser, MutableCapabilities options) {
         WebDriver driver = null;
         switch (browser){
             case CHROME:
@@ -41,7 +31,8 @@ public class WebDriverFactory {
                         "--disable-file-cookies",
                         "--disable-web-security",
                         "--disable-extensions",
-                        "--disable-feature=VizDisplayCompositor"));
+                        "--disable-feature=VizDisplayCompositor",
+                        "--incognito"));
                 options.setCapability(ChromeOptions.CAPABILITY, chromeOptions);
                 driver = new ChromeDriver();
                 break;

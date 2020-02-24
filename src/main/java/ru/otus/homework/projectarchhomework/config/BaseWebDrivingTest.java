@@ -1,20 +1,20 @@
 package ru.otus.homework.projectarchhomework.config;
 
-import org.openqa.selenium.MutableCapabilities;
 import org.openqa.selenium.WebDriver;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import ru.otus.homework.projectarchhomework.config.ui.BrowserType;
-import ru.otus.homework.projectarchhomework.config.ui.WebApplicationManager;
+import ru.otus.homework.projectarchhomework.pagesandblocks.pages.LoginPage;
 
 /**
  * Класс для запуска тестов с использованием браузера
  */
 public class BaseWebDrivingTest extends BaseTest {
-    protected WebApplicationManager webApp;
     protected WebDriver driver;
-    protected MutableCapabilities options;
+
+    @Autowired
+    protected Config config;
 
     public void setDriver(WebDriver driver){
         this.driver = driver;
@@ -27,9 +27,7 @@ public class BaseWebDrivingTest extends BaseTest {
         super.setUp();
         log.info("Test: [{}]",this.getClass().asSubclass(this.getClass()).getSimpleName());
         log.info("Browser: [{}]", BrowserType.valueOf(browser));
-        this.options = new MutableCapabilities();
-        this.webApp = new WebApplicationManager(BrowserType.valueOf(browser), options);
-        this.setDriver(webApp.getDriver());
+        this.setDriver(config.getDriver());
     }
 
     @AfterClass(alwaysRun = true)
