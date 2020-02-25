@@ -3,7 +3,6 @@ package ru.otus.homework.projectarchhomework.services.auth;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import ru.otus.homework.projectarchhomework.pagesandblocks.pages.LoginPage;
 import ru.otus.homework.projectarchhomework.pagesandblocks.pages.MainPage;

@@ -1,23 +1,83 @@
 package ru.otus.homework.projectarchhomework.tests;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ContextConfiguration;
+import org.testng.Assert;
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import ru.otus.homework.projectarchhomework.ProjectArchHomeworkApplication;
 import ru.otus.homework.projectarchhomework.config.BaseWebDrivingTest;
 import ru.otus.homework.projectarchhomework.config.Config;
+import ru.otus.homework.projectarchhomework.pagesandblocks.pages.BookMarksPage;
+import ru.otus.homework.projectarchhomework.pagesandblocks.pages.MainPage;
+import ru.otus.homework.projectarchhomework.services.auth.AuthorizationService;
+
+import java.util.concurrent.TimeUnit;
 
 @SpringBootTest(classes =  ProjectArchHomeworkApplication.class)
 @ContextConfiguration(classes = Config.class)
 @Test(groups = "smoke")
 public class BookMarkTest extends BaseWebDrivingTest {
-    //Добавить несколько статей в закладки, и проверить, что статьи отобразились.
-    /*
-    *1. Найти несколько статей через поиск
-    *2.добавить в закладки
-    *3.Перейти на Профиль-Закладки
-    *4.Проверить, что закладки отобразились
-    *5.Удалить одну статью из закладок
-    *6.Проверить, что осталась только одна статья в закладке
-    * */
+    private Logger log = LogManager.getLogger(BookMarkTest.class);
+    @Autowired
+    private AuthorizationService authorizationService;
+    @Autowired
+    private MainPage mainPage;
+    @Autowired
+    private BookMarksPage bookMarksPage;
+
+    @BeforeClass(alwaysRun = true)
+    public void init(){
+        /*Авторизоваться на сайте*/
+        authorizationService.doLogin(config.getUrl(),config.getUsername(),config.getPassword());
+    }
+
+    @Test(description = "Найти несколько статей по Spring. Проверить, что статьи нашлись.")
+    public void searchPosts(){
+        /*Выполнить поиск статей*/
+        mainPage.doSearch("Spring");
+        /*Проверить, что найденные статьи соответствуют поисковому запросу*/
+        mainPage.postPreviewList.forEach(e->{
+            String text = e.findElement(By.cssSelector("h2>a")).getText();
+            Assert.assertTrue(text.contains("Spring"),"В найденных постах нет упоминания Spring");
+        });
+    }
+
+    @Test(description = "Добавить 2 поста в закладки. Проверить, что посты отображаются в закладках.",
+        dependsOnMethods = "searchPosts")
+    public void addBookMarks() throws InterruptedException {
+        /*Добавить в закладки первые два поста*/
+        mainPage.addPostToBookMarks();
+        /*Перейти на страницу с закладками*/
+        mainPage.openProfileMenu();
+        mainPage.profileSettingBlock.bookmarkButton.click();
+        /*Проверить, что посты в закладки добавлены*/
+        Assert.assertEquals(bookMarksPage.postPreviewList.size(),2,
+                "Добавлено неверное количество постов в закладки");
+    }
+
+    @Test(description = "Удалить одну статью из закладок. Проверить, что в закладках осталась одна статья",
+            dependsOnMethods = "addBookMarks")
+    public void deleteBookMark(){
+        /*Удалить один пост из закладок*/
+        bookMarksPage.deletePostFromBookMarks();
+        ((JavascriptExecutor) driver).executeScript("window.location.reload()");
+        /*Проверить, что в закладках остался один пост*/
+        Assert.assertEquals(bookMarksPage.postPreviewList.size(),1,
+                "Осталось неверное количество постов в закладках");
+    }
+
+    @AfterClass(alwaysRun = true)
+    public void reset(){
+
+    }
 }

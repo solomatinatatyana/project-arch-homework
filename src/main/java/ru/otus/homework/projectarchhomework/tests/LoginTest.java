@@ -1,5 +1,7 @@
 package ru.otus.homework.projectarchhomework.tests;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.support.Color;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -22,6 +24,7 @@ import ru.otus.homework.projectarchhomework.services.auth.AuthorizationService;
 @Test(groups = "smoke")
 public class LoginTest extends BaseWebDrivingTest{
 
+    private Logger log = LogManager.getLogger(LoginTest.class);
     private SoftAssert softAssert = new SoftAssert();
 
     @Autowired
@@ -40,7 +43,6 @@ public class LoginTest extends BaseWebDrivingTest{
         mainPage.userProfileButton.click();
         Assert.assertTrue(mainPage.profileSettingBlock.profileInfo.getText().contains("Solomka95"),
                 "Неверное название профиля");
-
     }
 
     @Test(description = "Проверить неуспешную авторизацию",
@@ -50,9 +52,9 @@ public class LoginTest extends BaseWebDrivingTest{
         authorizationService.logout();
         WebDriverWait wait = new WebDriverWait(driver,100L);
         wait.until(ExpectedConditions.visibilityOfAllElements(loginPage.signButton));
-        /*tearDown();
-        setUp();*/
         authorizationService.doLogin(config.getUsername(), "123");
+        WebDriverWait wait2 = new WebDriverWait(driver,100L);
+        wait2.until(ExpectedConditions.visibilityOfAllElements(loginPage.username));
         softAssert.assertTrue(loginPage.noticeElement.isDisplayed(),"Плашка с ошибкой не отобразилась");
         softAssert.assertEquals(Color.fromString(loginPage.noticeElement.getCssValue("background-color")).asHex(),"#dd6c6c",
                 "Плашка с ошибкой не красного цвета");

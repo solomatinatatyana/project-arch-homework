@@ -23,6 +23,9 @@ public class ProfileSettingBlock extends AbstractPage {
     @FindBy(css = ".dropdown__user-info.user-info")
     public WebElement profileInfo;
 
+    @FindBy(css = "ul[class = 'n-dropdown-menu n-dropdown-menu_profile']>li:nth-child(3)>a")
+    public WebElement bookmarkButton;
+
     @FindBy(css = "ul[class = 'n-dropdown-menu n-dropdown-menu_profile']>li:nth-child(7)>a")
     public WebElement logoutButton;
 
