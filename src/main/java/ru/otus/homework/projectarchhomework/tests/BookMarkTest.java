@@ -4,14 +4,10 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ContextConfiguration;
 import org.testng.Assert;
-import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import ru.otus.homework.projectarchhomework.ProjectArchHomeworkApplication;
@@ -20,8 +16,6 @@ import ru.otus.homework.projectarchhomework.config.Config;
 import ru.otus.homework.projectarchhomework.pagesandblocks.pages.BookMarksPage;
 import ru.otus.homework.projectarchhomework.pagesandblocks.pages.MainPage;
 import ru.otus.homework.projectarchhomework.services.auth.AuthorizationService;
-
-import java.util.concurrent.TimeUnit;
 
 @SpringBootTest(classes =  ProjectArchHomeworkApplication.class)
 @ContextConfiguration(classes = Config.class)
@@ -52,9 +46,9 @@ public class BookMarkTest extends BaseWebDrivingTest {
         });
     }
 
-    @Test(description = "Добавить 2 поста в закладки. Проверить, что посты отображаются в закладках.",
+    @Test(description = "Добавить 1 пост в закладки. Проверить, что посты отображаются в закладках.",
         dependsOnMethods = "searchPosts")
-    public void addBookMarks() throws InterruptedException {
+    public void addBookMarks(){
         /*Добавить в закладки первые два поста*/
         mainPage.addPostToBookMarks();
         /*Перейти на страницу с закладками*/
@@ -65,13 +59,13 @@ public class BookMarkTest extends BaseWebDrivingTest {
                 "Добавлено неверное количество постов в закладки");
     }
 
-    @Test(description = "Удалить одну статью из закладок. Проверить, что в закладках осталась одна статья",
+    @Test(description = "Удалить пост из закладок. Проверить, что в закладках не осталось постов",
             dependsOnMethods = "addBookMarks")
     public void deleteBookMark(){
-        /*Удалить один пост из закладок*/
+        /*Удалить пост из закладок*/
         bookMarksPage.deletePostFromBookMarks();
         ((JavascriptExecutor) driver).executeScript("window.location.reload()");
-        /*Проверить, что в закладках остался один пост*/
+        /*Проверить, что в закладках не осталось постов*/
         Assert.assertEquals(bookMarksPage.postPreviewList.size(),0,
                 "Осталось неверное количество постов в закладках");
     }
