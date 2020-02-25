@@ -61,7 +61,7 @@ public class BookMarkTest extends BaseWebDrivingTest {
         mainPage.openProfileMenu();
         mainPage.profileSettingBlock.bookmarkButton.click();
         /*Проверить, что посты в закладки добавлены*/
-        Assert.assertEquals(bookMarksPage.postPreviewList.size(),2,
+        Assert.assertEquals(bookMarksPage.postPreviewList.size(),1,
                 "Добавлено неверное количество постов в закладки");
     }
 
