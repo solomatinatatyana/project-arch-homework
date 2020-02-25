@@ -72,12 +72,7 @@ public class BookMarkTest extends BaseWebDrivingTest {
         bookMarksPage.deletePostFromBookMarks();
         ((JavascriptExecutor) driver).executeScript("window.location.reload()");
         /*Проверить, что в закладках остался один пост*/
-        Assert.assertEquals(bookMarksPage.postPreviewList.size(),1,
+        Assert.assertEquals(bookMarksPage.postPreviewList.size(),0,
                 "Осталось неверное количество постов в закладках");
-    }
-
-    @AfterClass(alwaysRun = true)
-    public void reset(){
-
     }
 }
