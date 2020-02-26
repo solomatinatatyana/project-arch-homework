@@ -5,7 +5,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import ru.otus.homework.projectarchhomework.config.ui.BrowserType;
-import ru.otus.homework.projectarchhomework.pagesandblocks.pages.LoginPage;
 
 /**
  * Класс для запуска тестов с использованием браузера

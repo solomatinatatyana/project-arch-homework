@@ -8,7 +8,6 @@ import ru.otus.homework.projectarchhomework.config.Config;
 
 @SpringBootTest(classes =  ProjectArchHomeworkApplication.class)
 @ContextConfiguration(classes = Config.class)
-@Test(groups = "smoke")
 public class ProfilePhotoTest {
     //Проверить загрузку фотографии (допустимый/недопустимый размер)
 }

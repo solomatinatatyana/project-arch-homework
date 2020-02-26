@@ -1,13 +1,14 @@
 package ru.otus.homework.projectarchhomework.pagesandblocks.pages;
 
 import org.openqa.selenium.*;
-import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import ru.otus.homework.projectarchhomework.pagesandblocks.blocks.MainNavBarBlock;
+import ru.otus.homework.projectarchhomework.pagesandblocks.blocks.MainPageTabsBlock;
 import ru.otus.homework.projectarchhomework.pagesandblocks.blocks.ProfileSettingBlock;
 
 import java.util.List;
@@ -18,6 +19,11 @@ public class MainPage extends AbstractPage{
 
     @Autowired
     public ProfileSettingBlock profileSettingBlock;
+    @Autowired
+    public MainPageTabsBlock mainPageTabsBlock;
+    @Autowired
+    public MainNavBarBlock mainNavBarBlock;
+
     public MainPage(WebDriver driver) {
         super(driver);
         PageFactory.initElements(driver, this);
@@ -37,6 +43,9 @@ public class MainPage extends AbstractPage{
 
     @FindBy(css = "footer>ul>li:nth-child(2)>button[title='Добавить в закладки']")
     public List<WebElement> bookmarkNotAddedButton;
+
+    @FindBy(css = ".post-stats__result>span:nth-child(2)")
+    public List<WebElement> postsStatsList;
 
     public void doSearch(String text){
         WebDriverWait wait = new WebDriverWait(driver,50L);
@@ -60,4 +69,17 @@ public class MainPage extends AbstractPage{
                 .until(ExpectedConditions.elementToBeClickable(this.userProfileButton));
         button.click();
     }
+
+    public void filterPosts(WebElement filterElement){
+        WebElement button = (new WebDriverWait(driver, 50L))
+                .until(ExpectedConditions.elementToBeClickable(filterElement));
+        button.click();
+    }
+
+    public void goToNavPage(WebElement page){
+        WebElement button = (new WebDriverWait(driver, 50L))
+                .until(ExpectedConditions.elementToBeClickable(page));
+        button.click();
+    }
+
 }

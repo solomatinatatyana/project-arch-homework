@@ -53,5 +53,18 @@ public class AuthorizationServiceImpl implements AuthorizationService{
         wait.until(ExpectedConditions.visibilityOfAllElements(mainPage.userProfileButton));
         mainPage.userProfileButton.click();
         mainPage.profileSettingBlock.logoutButton.click();
+        WebDriverWait wait2 = new WebDriverWait(mainPage.driver,100L);
+        wait2.until(ExpectedConditions.visibilityOfAllElements(loginPage.signButton));
+    }
+
+    @Override
+    public void open(String url){
+        loginPage.driver.get(url);
+    }
+
+    @Override
+    public void goToLoginPage(String url){
+        this.open(url);
+        loginPage.signButton.click();
     }
 }
