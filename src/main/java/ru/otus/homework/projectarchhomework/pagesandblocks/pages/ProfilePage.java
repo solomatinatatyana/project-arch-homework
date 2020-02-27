@@ -3,6 +3,7 @@ package ru.otus.homework.projectarchhomework.pagesandblocks.pages;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -21,6 +22,8 @@ public class ProfilePage extends AbstractPage{
         PageFactory.initElements(driver, this);
     }
 
+    public By userAvatarUpl = By.cssSelector(".user-avatar__image");
+
     @FindBy(xpath = ".//div[a[contains(text(),'Настроить профиль')]]")
     public WebElement editProfileButton;
 
@@ -38,6 +41,9 @@ public class ProfilePage extends AbstractPage{
 
     @FindBy(css = ".user-avatar")
     public WebElement userAvatar;
+
+    @FindBy(css = ".user-avatar__image")
+    public WebElement userAvatarUploaded;
 
     public void uploadPhoto(String path){
         WebDriverWait wait = new WebDriverWait(driver,50L);
@@ -59,6 +65,15 @@ public class ProfilePage extends AbstractPage{
         wait.until(ExpectedConditions.visibilityOfAllElements(this.deleteButton));
         this.deleteButton.click();
         log.info("Картинка успешно удалена");
+    }
+
+    public boolean isElementPresent(By by) {
+        try {
+            driver.findElement(by).isDisplayed();
+            return true;
+        } catch (NoSuchElementException e) {
+            return false;
+        }
     }
 
 

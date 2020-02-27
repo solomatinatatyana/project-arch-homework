@@ -44,15 +44,16 @@ public class ProfilePhotoTest extends BaseWebDrivingTest {
         mainPage.openProfileMenu();
         mainPage.profileSettingBlock.profileInfo.click();
         profilePage.editProfileButton.click();
-        Assert.assertTrue(profilePage.userAvatar.isDisplayed(),"Аватар не загрузился");
-        profilePage.deletePhoto();
-        profilePage.save();
+        Assert.assertTrue(profilePage.isElementPresent(profilePage.userAvatarUpl),"Аватар не загрузился");
     }
 
-    /*@Test(description = "Загрузить аватар размера больше допустимого. Проверить, что аватар не загрузился",
+    @Test(description = "Загрузить недопустимый аватар. Проверить, что аватар не загрузился",
     dependsOnMethods = "uploadCorrectPhoto", alwaysRun = true)
     public void uploadUnCorrectPhoto(){
+        profilePage.deletePhoto();
+        profilePage.save();
         log.info("Загружаем аватару недопустимого размера...");
-        profilePage.uploadPhoto("src/main/resources/images/success.png");
-    }*/
+        profilePage.uploadPhoto("src/main/resources/images/fail.png");
+        Assert.assertFalse(profilePage.isElementPresent(profilePage.userAvatarUpl),"Аватар загрузился");
+    }
 }
