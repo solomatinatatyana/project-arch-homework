@@ -23,6 +23,8 @@ public class MainPage extends AbstractPage{
     public MainPageTabsBlock mainPageTabsBlock;
     @Autowired
     public MainNavBarBlock mainNavBarBlock;
+    @Autowired
+    public LanguageSettingsBlock languageSettingsBlock;
 
     public MainPage(WebDriver driver) {
         super(driver);
@@ -80,6 +82,12 @@ public class MainPage extends AbstractPage{
         WebElement button = (new WebDriverWait(driver, 50L))
                 .until(ExpectedConditions.elementToBeClickable(page));
         button.click();
+    }
+
+    public void changeInterfaceLanguage(WebElement language){
+        WebDriverWait wait = new WebDriverWait(driver,50L);
+        wait.until(ExpectedConditions.visibilityOfAllElements(this.languageSettingsBlock.headerInterface));
+        language.click();
     }
 
 }
