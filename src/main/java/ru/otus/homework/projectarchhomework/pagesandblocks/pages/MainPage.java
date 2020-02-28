@@ -49,6 +49,9 @@ public class MainPage extends AbstractPage{
     @FindBy(css = ".post-stats__result>span:nth-child(2)")
     public List<WebElement> postsStatsList;
 
+    @FindBy(css = ".loader")
+    public WebElement loader;
+
     public void doSearch(String text){
         WebDriverWait wait = new WebDriverWait(driver,50L);
         wait.until(ExpectedConditions.visibilityOfAllElements(this.searchButton));
@@ -88,6 +91,11 @@ public class MainPage extends AbstractPage{
         WebDriverWait wait = new WebDriverWait(driver,50L);
         wait.until(ExpectedConditions.visibilityOfAllElements(this.languageSettingsBlock.headerInterface));
         language.click();
+    }
+
+    public void saveSettings(){
+        this.languageSettingsBlock.saveButton.click();
+        ((JavascriptExecutor) driver).executeScript("window.location.reload()");
     }
 
 }

@@ -15,6 +15,8 @@ import ru.otus.homework.projectarchhomework.config.Config;
 import ru.otus.homework.projectarchhomework.pagesandblocks.pages.MainPage;
 import ru.otus.homework.projectarchhomework.services.auth.AuthorizationService;
 
+import java.util.concurrent.TimeUnit;
+
 @SpringBootTest(classes =  ProjectArchHomeworkApplication.class)
 @ContextConfiguration(classes = Config.class)
 @Test(groups = "smoke")
@@ -36,13 +38,19 @@ public class ChangeLanguageTest extends BaseWebDrivingTest {
         mainPage.openProfileMenu();
         mainPage.profileSettingBlock.languageSettingsButton.click();
         mainPage.changeInterfaceLanguage(mainPage.languageSettingsBlock.interfaceEnToggle);
-        mainPage.languageSettingsBlock.saveButton.click();
-        Assert.assertEquals(mainPage.languageSettingsBlock.headerInterface.getText(),"Language settings",
+        String header = mainPage.languageSettingsBlock.headerInterface.getText();
+        mainPage.saveSettings();
+        Assert.assertEquals(header,"Language settings",
                 "Неверный заголовок интерфейса");
     }
 
     @AfterClass(alwaysRun = true)
     public void reset(){
         /*Сменить язык обратно на русский*/
+        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+        mainPage.openProfileMenu();
+        mainPage.profileSettingBlock.languageSettingsButton.click();
+        mainPage.changeInterfaceLanguage(mainPage.languageSettingsBlock.interfaceRuToggle);
+        mainPage.languageSettingsBlock.saveButton.click();
     }
 }
