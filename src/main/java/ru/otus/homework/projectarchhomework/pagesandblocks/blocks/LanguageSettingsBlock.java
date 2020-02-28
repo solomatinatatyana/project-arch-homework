@@ -1,13 +1,14 @@
-package ru.otus.homework.projectarchhomework.pagesandblocks.pages;
+package ru.otus.homework.projectarchhomework.pagesandblocks.blocks;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.springframework.stereotype.Component;
+import ru.otus.homework.projectarchhomework.pagesandblocks.pages.AbstractPage;
 
 @Component
-public class LanguageSettingsBlock extends AbstractPage{
+public class LanguageSettingsBlock extends AbstractPage {
     public LanguageSettingsBlock(WebDriver driver) {
         super(driver);
         PageFactory.initElements(driver, this);

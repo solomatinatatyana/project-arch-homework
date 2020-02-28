@@ -7,6 +7,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import ru.otus.homework.projectarchhomework.pagesandblocks.blocks.LanguageSettingsBlock;
 import ru.otus.homework.projectarchhomework.pagesandblocks.blocks.MainNavBarBlock;
 import ru.otus.homework.projectarchhomework.pagesandblocks.blocks.MainPageTabsBlock;
 import ru.otus.homework.projectarchhomework.pagesandblocks.blocks.ProfileSettingBlock;
