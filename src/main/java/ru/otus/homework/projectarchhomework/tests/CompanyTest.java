@@ -47,13 +47,13 @@ public class CompanyTest extends BaseWebDrivingTest {
     public void searchCompany(){
         log.info("Ищем кампанию: [{}]", testCompany);
         companyPage.searchCompany(testCompany);
-        Assert.assertEquals(companyPage.companiesList.size(),1,"Кампания ["+ testCompany +"] не найдена");
+        Assert.assertEquals(companyPage.companiesList.size(),1,"Найдено больше одной кампании или ни одной");
     }
 
     @Test(description = "Нажать кнопку 'Подписаться'. " +
             "Проверить, что при наведении кнопка меняет цвет на зеленый" +
             "Проверить, что после подписки отображается 'Подписан'",
-        dependsOnMethods = "searchCompany")
+        dependsOnMethods = "searchCompany", alwaysRun = true)
     public void checkSubscription(){
         companyPage.subscribe("follow");
         log.info("Подписка на компанию [{}] оформлена", testCompany);
@@ -81,5 +81,15 @@ public class CompanyTest extends BaseWebDrivingTest {
         softAssert.assertEquals(Color.fromString(companyPage.subscribeButton.getCssValue("background-color")).asHex(),"#000000",
                 "Неверный цвет кнопки - не белый");
         softAssert.assertAll();
+    }
+
+    @Test(description = "Отфильтровать все компании по фильтру 'Информационная безопастность. " +
+            "Проверить, что отображается столько компаний, сколько указано рядом с фильтром'",
+            dependsOnMethods = "checkUnSubscription", alwaysRun = true)
+    public void checkFilterByTopic(){
+        companyPage.filterCompanyByTopic(companyPage.companySideBarBlock.infoSecurityTopicButton);
+        int countCompanies = companyPage.getCountCompaniesByTopic(companyPage.companySideBarBlock.infoSecurityTopicButton);
+        int currentFilteredCompanies = companyPage.companiesList.size();
+        Assert.assertEquals(currentFilteredCompanies,countCompanies, "Количество компаний по фильтру не совпадает с найденными");
     }
 }

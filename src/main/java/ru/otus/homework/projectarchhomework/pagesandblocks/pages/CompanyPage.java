@@ -7,12 +7,18 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import ru.otus.homework.projectarchhomework.pagesandblocks.blocks.CompanySideBarBlock;
 
 import java.util.List;
 
 @Component
 public class CompanyPage extends AbstractPage{
+
+    @Autowired
+    public CompanySideBarBlock companySideBarBlock;
+
     public CompanyPage(WebDriver driver) {
         super(driver);
         PageFactory.initElements(driver, this);
@@ -21,7 +27,7 @@ public class CompanyPage extends AbstractPage{
     @FindBy(id = "companies_suggest")
     public WebElement searchCompanyTextInput;
 
-    @FindBy(id = "companies")
+    @FindBy(css = "ul[id='companies']>li")
     public List<WebElement> companiesList;
 
     @FindBy(css = ".table-grid__item.table-grid__item_right")
@@ -39,6 +45,8 @@ public class CompanyPage extends AbstractPage{
         wait.until(ExpectedConditions.visibilityOfAllElements(this.searchCompanyTextInput));
         searchCompanyTextInput.clear();
         searchCompanyTextInput.sendKeys(company);
+        WebDriverWait wait2 = new WebDriverWait(driver,50L);
+        wait2.until(ExpectedConditions.visibilityOfAllElements(this.companiesList.get(0)));
     }
 
     /**
@@ -60,6 +68,16 @@ public class CompanyPage extends AbstractPage{
                 break;
 
         }
+    }
+
+    public void filterCompanyByTopic(WebElement topicButton){
+        WebDriverWait wait = new WebDriverWait(driver,50L);
+        wait.until(ExpectedConditions.visibilityOfAllElements(topicButton));
+        topicButton.click();
+    }
+
+    public int getCountCompaniesByTopic(WebElement topicButton){
+        return  Integer.parseInt(topicButton.findElement(this.companySideBarBlock.countTopics).getText());
     }
 
 }

@@ -13,7 +13,7 @@ public class BaseWebDrivingTest extends BaseTest {
     protected WebDriver driver;
 
     @Autowired
-    protected Config config;
+    public Config config;
 
     public void setDriver(WebDriver driver){
         this.driver = driver;
@@ -30,10 +30,15 @@ public class BaseWebDrivingTest extends BaseTest {
     }
 
     @AfterClass(alwaysRun = true)
-    public void tearDown(){
-        log.info("END of TEST - {}",getClass().asSubclass(getClass().getSuperclass()).getSimpleName());
-        if (driver != null) {
-            driver.quit();
+    public void tearDown() {
+        log.info("END of TEST - {}", getClass().asSubclass(getClass().getSuperclass()).getSimpleName());
+        try {
+            if (this.driver != null) {
+                this.driver.quit();
+            }
+            log.info("Browser and Driver Killed");
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 }
