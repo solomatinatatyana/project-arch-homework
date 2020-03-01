@@ -1,5 +1,6 @@
 package ru.otus.homework.projectarchhomework.pagesandblocks.pages;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
@@ -24,6 +25,8 @@ public class CompanyPage extends AbstractPage{
         PageFactory.initElements(driver, this);
     }
 
+    By companies = By.cssSelector("ul[id='companies']>li");
+
     @FindBy(id = "companies_suggest")
     public WebElement searchCompanyTextInput;
 
@@ -46,7 +49,7 @@ public class CompanyPage extends AbstractPage{
         searchCompanyTextInput.clear();
         searchCompanyTextInput.sendKeys(company);
         WebDriverWait wait2 = new WebDriverWait(driver,50L);
-        wait2.until(ExpectedConditions.visibilityOfAllElements(this.companiesList.get(0)));
+        wait2.until(ExpectedConditions.numberOfElementsToBe(this.companies,1));
     }
 
     /**
