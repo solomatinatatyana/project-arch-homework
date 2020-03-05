@@ -8,7 +8,6 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.remote.CapabilityType;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import ru.otus.homework.projectarchhomework.config.ui.BrowserType;
 
