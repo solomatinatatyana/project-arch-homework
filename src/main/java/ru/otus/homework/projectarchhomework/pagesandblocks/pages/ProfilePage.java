@@ -1,5 +1,6 @@
 package ru.otus.homework.projectarchhomework.pagesandblocks.pages;
 
+import io.qameta.allure.Step;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.By;
@@ -54,12 +55,14 @@ public class ProfilePage extends AbstractPage{
         log.info("Аватар успешно загружен");
     }
 
+    @Step("Сохранить изменения")
     public void save(){
         this.saveButton.click();
         WebDriverWait wait = new WebDriverWait(driver,50L);
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(".message.message_successfull")));
     }
 
+    @Step("Удалить фото профиля")
     public void deletePhoto(){
         WebDriverWait wait = new WebDriverWait(driver,50L);
         wait.until(ExpectedConditions.visibilityOfAllElements(this.deleteButton));

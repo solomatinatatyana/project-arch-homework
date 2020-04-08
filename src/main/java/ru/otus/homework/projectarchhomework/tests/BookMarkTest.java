@@ -1,5 +1,8 @@
 package ru.otus.homework.projectarchhomework.tests;
 
+import io.qameta.allure.Epic;
+import io.qameta.allure.Feature;
+import io.qameta.allure.Story;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.By;
@@ -19,6 +22,9 @@ import ru.otus.homework.projectarchhomework.services.auth.AuthorizationService;
 
 @SpringBootTest(classes =  ProjectArchHomeworkApplication.class)
 @ContextConfiguration(classes = Config.class)
+@Epic("Spring Tests")
+@Feature("Тесты с авторизацией")
+@Story("Проверка добавления закладок в профиле пользователя")
 @Test(groups = "smoke")
 public class BookMarkTest extends BaseWebDrivingTest {
     private Logger log = LogManager.getLogger(BookMarkTest.class);

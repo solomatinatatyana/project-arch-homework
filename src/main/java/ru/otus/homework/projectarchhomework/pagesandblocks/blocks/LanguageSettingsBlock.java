@@ -20,10 +20,10 @@ public class LanguageSettingsBlock extends AbstractPage {
     @FindBy(css = ".popup__head_lang-settings>span")
     public WebElement headerInterface;
 
-    @FindBy(xpath = ".//label[@class='radio radio_custom ']/span[contains(text(),'Русский')]")
+    @FindBy(xpath = ".//span[@class='radio radio_custom ']/label[contains(text(),'Русский')]")
     public WebElement interfaceRuToggle;
 
-    @FindBy(xpath = ".//label[@class='radio radio_custom ']/span[contains(text(),'English')]")
+    @FindBy(xpath = ".//span[@class='radio radio_custom ']/label[contains(text(),'English')]")
     public WebElement interfaceEnToggle;
 
     @FindBy(css = ".js-popup_save_btn")

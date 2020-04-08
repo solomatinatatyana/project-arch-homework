@@ -1,5 +1,8 @@
 package ru.otus.homework.projectarchhomework.tests;
 
+import io.qameta.allure.Epic;
+import io.qameta.allure.Feature;
+import io.qameta.allure.Story;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +20,10 @@ import ru.otus.homework.projectarchhomework.services.auth.AuthorizationService;
 
 @SpringBootTest(classes =  ProjectArchHomeworkApplication.class)
 @ContextConfiguration(classes = Config.class)
+@Epic("Spring Tests")
+@Feature("Тесты с авторизацией")
+@Story("Проверка добавления фотографии в профиль. Позитивный и негативный сценарии")
+@Test(groups = "smoke")
 public class ProfilePhotoTest extends BaseWebDrivingTest {
     private Logger log = LogManager.getLogger(ProfilePhotoTest.class);
     @Autowired

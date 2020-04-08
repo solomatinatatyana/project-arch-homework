@@ -1,5 +1,6 @@
 package ru.otus.homework.projectarchhomework.pagesandblocks.pages;
 
+import io.qameta.allure.Step;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
@@ -53,6 +54,7 @@ public class MainPage extends AbstractPage{
     @FindBy(css = ".loader")
     public WebElement loader;
 
+    @Step("Поиск {text}")
     public void doSearch(String text){
         WebDriverWait wait = new WebDriverWait(driver,50L);
         wait.until(ExpectedConditions.visibilityOfAllElements(this.searchButton));
@@ -62,6 +64,7 @@ public class MainPage extends AbstractPage{
         searchTextInput.sendKeys(Keys.ENTER);
     }
 
+    @Step("Добавить пост в закладки")
     public void addPostToBookMarks(){
         ((JavascriptExecutor) driver).executeScript("window.scrollBy(0,2000)");
         this.bookmarkNotAddedButton.get(0).click();
@@ -70,30 +73,35 @@ public class MainPage extends AbstractPage{
         lol.click();
     }
 
+    @Step("Открыть меню профиля")
     public void openProfileMenu(){
         WebElement button = (new WebDriverWait(driver, 50L))
                 .until(ExpectedConditions.elementToBeClickable(this.userProfileButton));
         button.click();
     }
 
+    @Step("Отфильтровать посты")
     public void filterPosts(WebElement filterElement){
         WebElement button = (new WebDriverWait(driver, 50L))
                 .until(ExpectedConditions.elementToBeClickable(filterElement));
         button.click();
     }
 
+    @Step("Перейти на страницу {page}")
     public void goToNavPage(WebElement page){
         WebElement button = (new WebDriverWait(driver, 50L))
                 .until(ExpectedConditions.elementToBeClickable(page));
         button.click();
     }
 
+    @Step("Сменить язык интерфейса")
     public void changeInterfaceLanguage(WebElement language){
         WebDriverWait wait = new WebDriverWait(driver,50L);
         wait.until(ExpectedConditions.visibilityOfAllElements(this.languageSettingsBlock.headerInterface));
         language.click();
     }
 
+    @Step("Сохранить настройки")
     public void saveSettings(){
         this.languageSettingsBlock.saveButton.click();
         ((JavascriptExecutor) driver).executeScript("window.location.reload()");

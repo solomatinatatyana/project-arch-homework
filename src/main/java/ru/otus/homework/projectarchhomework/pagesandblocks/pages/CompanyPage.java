@@ -1,5 +1,6 @@
 package ru.otus.homework.projectarchhomework.pagesandblocks.pages;
 
+import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -42,19 +43,17 @@ public class CompanyPage extends AbstractPage{
     @FindBy(css = "button[data-state='unfollow']")
     public WebElement unsubscribeButton;
 
-
+    @Step("Найти компанию")
     public void searchCompany(String company){
         WebDriverWait wait = new WebDriverWait(driver,50L);
         wait.until(ExpectedConditions.visibilityOfAllElements(this.searchCompanyTextInput));
         searchCompanyTextInput.clear();
         searchCompanyTextInput.sendKeys(company);
         WebDriverWait wait2 = new WebDriverWait(driver,50L);
-        wait2.until(ExpectedConditions.numberOfElementsToBe(this.companies,1));
+        wait2.until(ExpectedConditions.numberOfElementsToBeLessThan(this.companies,10));
     }
 
-    /**
-     * Подписаться/отписаться
-     */
+    @Step("Подписаться/отписаться")
     public void subscribe(String actions){
         Actions action = new Actions(driver);
         action.moveToElement(companyRightGrid).build().perform();
@@ -73,12 +72,14 @@ public class CompanyPage extends AbstractPage{
         }
     }
 
+    @Step("Отфильтровать компании по тематике")
     public void filterCompanyByTopic(WebElement topicButton){
         WebDriverWait wait = new WebDriverWait(driver,50L);
         wait.until(ExpectedConditions.visibilityOfAllElements(topicButton));
         topicButton.click();
     }
 
+    @Step("Получить количество компаний по тематике")
     public int getCountCompaniesByTopic(WebElement topicButton){
         return  Integer.parseInt(topicButton.findElement(this.companySideBarBlock.countTopics).getText());
     }

@@ -1,5 +1,6 @@
 package ru.otus.homework.projectarchhomework.pagesandblocks.pages;
 
+import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
@@ -26,6 +27,7 @@ public class BookMarksPage extends AbstractPage{
     @FindBy(css = "footer>ul>li:nth-child(2)>button[title='Удалить из закладок']")
     public List<WebElement> bookmarkButtonIsAddedLocator;
 
+    @Step("Удалить посты из закладок")
     public void deletePostFromBookMarks(){
         ((JavascriptExecutor) driver).executeScript("window.scrollBy(0,2000)");
         this.bookmarkButtonIsAddedLocator.get(0).click();

@@ -1,5 +1,8 @@
 package ru.otus.homework.projectarchhomework.tests;
 
+import io.qameta.allure.Epic;
+import io.qameta.allure.Feature;
+import io.qameta.allure.Story;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.interactions.Actions;
@@ -22,6 +25,9 @@ import ru.otus.homework.projectarchhomework.services.auth.AuthorizationService;
 
 @SpringBootTest(classes =  ProjectArchHomeworkApplication.class)
 @ContextConfiguration(classes = Config.class)
+@Epic("Spring Tests")
+@Feature("Тесты с авторизацией")
+@Story("Проверка подписки/отписки на посты компании")
 @Test(groups = "smoke")
 public class CompanyTest extends BaseWebDrivingTest {
     private Logger log = LogManager.getLogger(MainPageTest.class);
@@ -47,7 +53,7 @@ public class CompanyTest extends BaseWebDrivingTest {
     public void searchCompany(){
         log.info("Ищем кампанию: [{}]", testCompany);
         companyPage.searchCompany(testCompany);
-        Assert.assertEquals(companyPage.companiesList.size(),1,"Найдено больше одной кампании или ни одной");
+        Assert.assertEquals(companyPage.companiesList.size(),2,"Найдено больше одной кампании или ни одной");
     }
 
     @Test(description = "Нажать кнопку 'Подписаться'. " +

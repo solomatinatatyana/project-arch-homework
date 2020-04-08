@@ -1,5 +1,8 @@
 package ru.otus.homework.projectarchhomework.tests;
 
+import io.qameta.allure.Epic;
+import io.qameta.allure.Feature;
+import io.qameta.allure.Story;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.WebElement;
@@ -19,7 +22,10 @@ import ru.otus.homework.projectarchhomework.services.auth.AuthorizationService;
 
 @SpringBootTest(classes =  ProjectArchHomeworkApplication.class)
 @ContextConfiguration(classes = Config.class)
-@Test(groups = "smoke")
+@Epic("Spring Tests")
+@Feature("Тесты без авторизации")
+@Story("Проверка фильтрации постов")
+//@Test(groups = "smoke")
 public class MainPageTest extends BaseWebDrivingTest {
     private Logger log = LogManager.getLogger(MainPageTest.class);
     private SoftAssert softAssert = new SoftAssert();

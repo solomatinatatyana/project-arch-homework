@@ -1,5 +1,6 @@
 package ru.otus.homework.projectarchhomework.services.auth;
 
+import io.qameta.allure.Step;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,16 +39,19 @@ public class AuthorizationServiceImpl implements AuthorizationService{
     }
 
     @Override
+    @Step("Логин")
     public void doLogin(String url, String login, String password) {
         this.login(url, login, password);
     }
 
     @Override
+    @Step("Логин")
     public void doLogin(String login, String password) {
         this.loginUI(login, password);
     }
 
     @Override
+    @Step("Разлогин")
     public void logout() {
         WebDriverWait wait = (new WebDriverWait(mainPage.driver,50L));
         wait.until(ExpectedConditions.visibilityOfAllElements(mainPage.userProfileButton));
@@ -58,11 +62,13 @@ public class AuthorizationServiceImpl implements AuthorizationService{
     }
 
     @Override
+    @Step("Переход на сайт {url}")
     public void open(String url){
         loginPage.driver.get(url);
     }
 
     @Override
+    @Step("Переход на страницу авторизации сайта -  {url}")
     public void goToLoginPage(String url){
         this.open(url);
         loginPage.signButton.click();
