@@ -1,5 +1,6 @@
 package ru.otus.homework.projectarchhomework.tests;
 
+import io.qameta.allure.Description;
 import io.qameta.allure.Epic;
 import io.qameta.allure.Feature;
 import io.qameta.allure.Story;
@@ -41,7 +42,8 @@ public class ProfilePhotoTest extends BaseWebDrivingTest {
         profilePage.editProfileButton.click();
     }
 
-    @Test(description = "Загрузить аватар допустимого размера до 96х96. Проверить, что аватар загружен")
+    @Description("Загрузить аватар допустимого размера до 96х96. Проверить, что аватар загружен")
+    @Test()
     public void uploadCorrectPhoto(){
         log.info("Загружаем аватар допустимого размера...");
         profilePage.uploadPhoto("src/main/resources/images/success.png");
@@ -54,8 +56,8 @@ public class ProfilePhotoTest extends BaseWebDrivingTest {
         Assert.assertTrue(profilePage.isElementPresent(profilePage.userAvatarUpl),"Аватар не загрузился");
     }
 
-    @Test(description = "Загрузить недопустимый аватар. Проверить, что аватар не загрузился",
-    dependsOnMethods = "uploadCorrectPhoto", alwaysRun = true)
+    @Description("Загрузить недопустимый аватар. Проверить, что аватар не загрузился")
+    @Test(dependsOnMethods = "uploadCorrectPhoto", alwaysRun = true)
     public void uploadUnCorrectPhoto(){
         profilePage.deletePhoto();
         profilePage.save();

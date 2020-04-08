@@ -1,5 +1,6 @@
 package ru.otus.homework.projectarchhomework.tests;
 
+import io.qameta.allure.Description;
 import io.qameta.allure.Epic;
 import io.qameta.allure.Feature;
 import io.qameta.allure.Story;
@@ -49,17 +50,18 @@ public class CompanyTest extends BaseWebDrivingTest {
         mainPage.goToNavPage(mainPage.mainPageTabsBlock.companyButton);
     }
 
-    @Test(description = "Найти компанию - Сбербанк. Проверить, что компания найдена")
+    @Description("Найти компанию - Сбербанк. Проверить, что компания найдена")
+    @Test()
     public void searchCompany(){
         log.info("Ищем кампанию: [{}]", testCompany);
         companyPage.searchCompany(testCompany);
         Assert.assertEquals(companyPage.companiesList.size(),2,"Найдено больше одной кампании или ни одной");
     }
 
-    @Test(description = "Нажать кнопку 'Подписаться'. " +
+    @Description("Нажать кнопку 'Подписаться'. " +
             "Проверить, что при наведении кнопка меняет цвет на зеленый" +
-            "Проверить, что после подписки отображается 'Подписан'",
-        dependsOnMethods = "searchCompany", alwaysRun = true)
+            "Проверить, что после подписки отображается 'Подписан'")
+    @Test(dependsOnMethods = "searchCompany", alwaysRun = true)
     public void checkSubscription(){
         companyPage.subscribe("follow");
         log.info("Подписка на компанию [{}] оформлена", testCompany);
@@ -73,8 +75,8 @@ public class CompanyTest extends BaseWebDrivingTest {
         softAssert.assertAll();
     }
 
-    @Test(description = "Нажать кнопку 'Отписаться'. Проверить, что после отписки отображается 'Подписаться'",
-        dependsOnMethods = "checkSubscription", alwaysRun = true)
+    @Description("Нажать кнопку 'Отписаться'. Проверить, что после отписки отображается 'Подписаться'")
+    @Test(dependsOnMethods = "checkSubscription", alwaysRun = true)
     public void checkUnSubscription(){
         companyPage.subscribe("unfollow");
         log.info("Подписка на компанию [{}] отменена", testCompany);
@@ -89,9 +91,9 @@ public class CompanyTest extends BaseWebDrivingTest {
         softAssert.assertAll();
     }
 
-    @Test(description = "Отфильтровать все компании по фильтру 'Информационная безопастность. " +
-            "Проверить, что отображается столько компаний, сколько указано рядом с фильтром'",
-            dependsOnMethods = "checkUnSubscription", alwaysRun = true)
+    @Description("Отфильтровать все компании по фильтру 'Информационная безопастность. " +
+            "Проверить, что отображается столько компаний, сколько указано рядом с фильтром'")
+    @Test(dependsOnMethods = "checkUnSubscription", alwaysRun = true)
     public void checkFilterByTopic(){
         companyPage.filterCompanyByTopic(companyPage.companySideBarBlock.infoSecurityTopicButton);
         int countCompanies = companyPage.getCountCompaniesByTopic(companyPage.companySideBarBlock.infoSecurityTopicButton);

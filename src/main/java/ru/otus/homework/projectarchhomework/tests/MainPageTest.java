@@ -1,5 +1,6 @@
 package ru.otus.homework.projectarchhomework.tests;
 
+import io.qameta.allure.Description;
 import io.qameta.allure.Epic;
 import io.qameta.allure.Feature;
 import io.qameta.allure.Story;
@@ -49,7 +50,8 @@ public class MainPageTest extends BaseWebDrivingTest {
         mainPage.goToNavPage(mainPage.mainNavBarBlock.allButton);
     }
 
-    @Test(description = "Проверить, что на странице отображается 20 постов")
+    @Description("Проверить, что на странице отображается 20 постов")
+    @Test()
     public void checkCountPosts(){
         log.info("Провера количетсва постов на странице...");
         Assert.assertEquals(mainPage.postPreviewList.size(),20,
@@ -57,9 +59,9 @@ public class MainPageTest extends BaseWebDrivingTest {
 
     }
     // >=10, >=25, >=50, >=100
-    @Test(description = "Отфильтровать посты по рейтингу. " +
-                        "Проверить, что отображаются посты в соответствии с установленным фильтром",
-            dependsOnMethods = "checkCountPosts", dataProvider = "filters",
+    @Description("Отфильтровать посты по рейтингу. " +
+            "Проверить, что отображаются посты в соответствии с установленным фильтром")
+    @Test(dependsOnMethods = "checkCountPosts", dataProvider = "filters",
             alwaysRun = true)
     public void checkRatingInPosts(WebElement filterButton, int count){
         log.info("Проверка фильтра [{}]",filterButton.getText());

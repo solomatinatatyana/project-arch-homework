@@ -1,8 +1,6 @@
 package ru.otus.homework.projectarchhomework.tests;
 
-import io.qameta.allure.Epic;
-import io.qameta.allure.Feature;
-import io.qameta.allure.Story;
+import io.qameta.allure.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.By;
@@ -63,8 +61,8 @@ public class LoginTest extends BaseWebDrivingTest{
         authorizationService.goToLoginPage(config.getUrl());
     }
 
-    @Test(description = "Проверить, что отображаются иконки всех социальных сетей и у каждой иконки при наведении свой цвет",
-        dataProvider = "pictColors")
+    @Description("Проверить, что отображаются иконки всех социальных сетей и у каждой иконки при наведении свой цвет")
+    @Test(dataProvider = "pictColors")
     public void checkSocialPictogram(WebElement button, String color) {
         softAssert.assertTrue(button.isDisplayed(),"икнока соц. сети: " + button.getText() + " не отображается");
         moveToElement(button);
@@ -73,8 +71,8 @@ public class LoginTest extends BaseWebDrivingTest{
         softAssert.assertAll();
     }
 
-
-    @Test(description = "Проверить успешную авторизацию", alwaysRun = true, dependsOnMethods = "checkSocialPictogram")
+    @Description("Проверить успешную авторизацию")
+    @Test(alwaysRun = true, dependsOnMethods = "checkSocialPictogram")
     public void checkLoginSuccess() {
         log.info("Логинимся по юзером {}", config.getUsername());
         authorizationService.doLogin(config.getUrl(),config.getUsername(), config.getPassword());
@@ -83,8 +81,8 @@ public class LoginTest extends BaseWebDrivingTest{
                 "Неверное название профиля");
     }
 
-    @Test(description = "Проверить неуспешную авторизацию",
-            dependsOnMethods = "checkLoginSuccess",alwaysRun = true)
+    @Description("Проверить неуспешную авторизацию")
+    @Test(dependsOnMethods = "checkLoginSuccess",alwaysRun = true)
     public void checkLoginFail() {
         mainPage.userProfileButton.click();
         log.info("Разлогиниваемся");
@@ -102,10 +100,12 @@ public class LoginTest extends BaseWebDrivingTest{
         softAssert.assertAll();
     }
 //--------------------------------------------------METHODS-------------------------------------------------------------
+    @Step("Получить цвет иконки")
     private String getColorOfElement(WebElement element){
         return Color.fromString(element.getCssValue("background-color")).asHex();
     }
 
+    @Step("Перейти на иконку")
     private void moveToElement(WebElement element){
         actions.moveToElement(element).build().perform();
     }

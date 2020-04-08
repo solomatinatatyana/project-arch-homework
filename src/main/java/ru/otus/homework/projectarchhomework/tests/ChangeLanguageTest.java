@@ -1,5 +1,6 @@
 package ru.otus.homework.projectarchhomework.tests;
 
+import io.qameta.allure.Description;
 import io.qameta.allure.Epic;
 import io.qameta.allure.Feature;
 import io.qameta.allure.Story;
@@ -38,8 +39,9 @@ public class ChangeLanguageTest extends BaseWebDrivingTest {
         authorizationService.doLogin(config.getUrl(), config.getUsername(),config.getPassword());
     }
 
-    @Test(description = "Открыть настройки языка. Сменить язык интерфейса на английский." +
+    @Description("Открыть настройки языка. Сменить язык интерфейса на английский." +
             "Проверить, что язык сменился.")
+    @Test()
     public void checkChangeLanguage(){
         mainPage.openProfileMenu();
         mainPage.profileSettingBlock.languageSettingsButton.click();

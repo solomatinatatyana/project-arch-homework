@@ -1,5 +1,6 @@
 package ru.otus.homework.projectarchhomework.tests;
 
+import io.qameta.allure.Description;
 import io.qameta.allure.Epic;
 import io.qameta.allure.Feature;
 import io.qameta.allure.Story;
@@ -41,7 +42,8 @@ public class BookMarkTest extends BaseWebDrivingTest {
         authorizationService.doLogin(config.getUrl(),config.getUsername(),config.getPassword());
     }
 
-    @Test(description = "Найти несколько статей по Spring. Проверить, что статьи нашлись.")
+    @Description("Найти несколько статей по Spring. Проверить, что статьи нашлись.")
+    @Test()
     public void searchPosts(){
         /*Выполнить поиск статей*/
         mainPage.doSearch("Spring");
@@ -52,8 +54,8 @@ public class BookMarkTest extends BaseWebDrivingTest {
         });
     }
 
-    @Test(description = "Добавить 1 пост в закладки. Проверить, что посты отображаются в закладках.",
-        dependsOnMethods = "searchPosts")
+    @Description("Добавить 1 пост в закладки. Проверить, что посты отображаются в закладках.")
+    @Test(dependsOnMethods = "searchPosts")
     public void addBookMarks(){
         /*Добавить в закладки первые два поста*/
         mainPage.addPostToBookMarks();
@@ -65,8 +67,8 @@ public class BookMarkTest extends BaseWebDrivingTest {
                 "Добавлено неверное количество постов в закладки");
     }
 
-    @Test(description = "Удалить пост из закладок. Проверить, что в закладках не осталось постов",
-            dependsOnMethods = "addBookMarks")
+    @Description("Удалить пост из закладок. Проверить, что в закладках не осталось постов")
+    @Test(dependsOnMethods = "addBookMarks")
     public void deleteBookMark(){
         /*Удалить пост из закладок*/
         bookMarksPage.deletePostFromBookMarks();
