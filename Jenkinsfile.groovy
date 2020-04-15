@@ -15,7 +15,7 @@ node {
         echo "Sending e-mail"
         BUILD_DURATION = "${currentBuild.durationString.replace(' and counting', '')}"
 
-        emailext body: '''Автотесты OTUS, <br>Длительность прогона:  ''' + BUILD_DURATION + '''
+        emailext body: '''Autotests OTUS, <br>Duration:  ''' + BUILD_DURATION + ''' 
 
 <!DOCTYPE html>
 <html>
@@ -54,7 +54,7 @@ node {
         </tr>
         <tr>
                                <td BGCOLOR="#A4A4A4" width="20%"><FONT COLOR=white FACE="Geneva, Arial" SIZE=2><b>Время прогона</b></td>
-                               <td>BUILD_DURATION</td>
+                               <td>${BUILD_DURATION}</td>
                 </tr>
                 <tr>
                                <td BGCOLOR="#A4A4A4" width="20%"><FONT COLOR=white FACE="Geneva, Arial" SIZE=2><b>Ссылка на отчет</b></td>
@@ -64,7 +64,7 @@ node {
 </html>
 </body>''',
                 mimeType: 'text/html',
-                subject: "Автотесты OTUS, браузер ${BROWSER}",
+                subject: "Autotests OTUS, on browser ${BROWSER} build number: ${BUILD_NUMBER}",
                 to: "${RECIPIENT}",
                 replyTo: "${RECIPIENT}"
     }
