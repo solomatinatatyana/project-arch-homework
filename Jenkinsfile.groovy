@@ -15,7 +15,7 @@ node {
         echo "Sending e-mail"
         BUILD_DURATION = "${currentBuild.durationString.replace(' and counting', '')}"
 
-        emailext body: "Автотесты OTUS, <br>Длительность прогона: " + BUILD_DURATION,
+        emailext body: "Автотесты OTUS, <br>Длительность прогона: " + BUILD_DURATION + " "   + "${env.BUILD_NUMBER}",
                 mimeType: 'text/html',
                 subject: "Автотесты OTUS, браузер ${BROWSER}",
                 to: "${RECIPIENT}",
