@@ -8,4 +8,27 @@ node {
                 //runTests: { build 'Test' }
         )
     }
+    //stage ('Generate Smoke report'){
+
+    //}
+
+    stage ('SendMailReport'){
+        echo "Sending e-mail"
+        BUILD_DURATION = "${currentBuild.durationString.replace(' and counting', '')}"
+
+        emailext body: "Автотесты OTUS, <br>Длительность прогона: " + BUILD_DURATION,
+
+                mimeType: 'text/html',
+
+                subject: "Автотесты OTUS, браузер ${BROWSER}",
+
+                to: "${RECIPIENT}",
+
+                replyTo: "${RECIPIENT}"
+
+    }
+
+
+
+
 }
