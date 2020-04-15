@@ -54,7 +54,7 @@ node {
         </tr>
         <tr>
                                <td BGCOLOR="#A4A4A4" width="20%"><FONT COLOR=white FACE="Geneva, Arial" SIZE=2><b>Время прогона</b></td>
-                               <td>${BUILD_DURATION}</td>
+                               <td>'''+ BUILD_DURATION +'''</td>
                 </tr>
                 <tr>
                                <td BGCOLOR="#A4A4A4" width="20%"><FONT COLOR=white FACE="Geneva, Arial" SIZE=2><b>Ссылка на отчет</b></td>
