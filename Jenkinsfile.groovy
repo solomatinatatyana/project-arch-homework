@@ -4,18 +4,19 @@ node {
 
     try {
         stage('Run Tests') {
-            parallel(
+            /*parallel(
                     runTests: { build job: 'PipeJob', parameters: [string(name: 'browser', value: 'CHROME'), gitParameter(name: 'BRANCH', value: 'origin/master')] }
                     //runTests: { build 'Test' }
-            )
+            )*/
+            sh "mvn clean test -Dbrowser="+BROWSER
         }
     }catch(ex){
 
     }finally{
-        echo "Sending e-mail"
-        BUILD_DURATION = "${currentBuild.durationString.replace(' and counting', '')}"
-
-        emailext body: '''Autotests OTUS, <br>Duration:  ''' + BUILD_DURATION + ''' 
+        stage ('SendMailReport'){
+            echo "Sending e-mail"
+            BUILD_DURATION = "${currentBuild.durationString.replace(' and counting', '')}"
+            emailext body: '''Autotests OTUS, <br>Duration:  ''' + BUILD_DURATION + ''' 
 
 <!DOCTYPE html>
 <html>
@@ -63,21 +64,20 @@ node {
 </table>
 </html>
 </body>''',
-                mimeType: 'text/html',
-                subject: "Autotests OTUS, on browser ${BROWSER} build number: ${BUILD_NUMBER}",
-                to: "${RECIPIENT}",
-                replyTo: "${RECIPIENT}"
+                    mimeType: 'text/html',
+                    subject: "Autotests OTUS, on browser ${BROWSER} build number: ${BUILD_NUMBER}",
+                    to: "${RECIPIENT}",
+                    replyTo: "${RECIPIENT}"
+        }
+
+        stage('Reports') {
+            allure([
+                    includeProperties: false,
+                    jdk: '',
+                    properties: [],
+                    reportBuildPolicy: 'ALWAYS',
+                    results: [[path: 'target/allure-results']]
+            ])
+        }
     }
-    //stage ('Generate Smoke report'){
-
-    //}
-
-    //stage ('SendMailReport'){
-
-
-    //}
-
-
-
-
 }
