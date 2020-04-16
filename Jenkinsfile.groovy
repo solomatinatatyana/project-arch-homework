@@ -78,6 +78,6 @@ node {
                     to: "${RECIPIENT}",
                     replyTo: "${RECIPIENT}"
         }
-
+        slackSend color: 'good', message: 'Message from Jenkins Pipeline'
     }
 }
