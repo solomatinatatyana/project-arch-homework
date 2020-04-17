@@ -33,7 +33,7 @@ node {
             //runTests:{build 'Test'}
         }
     }catch(ex){
-        currentBuild.result = 'FAILURE'
+        currentBuild.result = 'UNSTABLE'
     }finally{
         stage('Reports') {
             allure([
