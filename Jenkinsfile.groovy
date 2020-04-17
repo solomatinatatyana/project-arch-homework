@@ -5,6 +5,7 @@ import jenkins.model.*
 import hudson.*
 import hudson.model.*
 properties([pipelineTriggers([githubPush()])])
+
 node {
 
     RECIPIENT = "tokio9507@gmail.com"
