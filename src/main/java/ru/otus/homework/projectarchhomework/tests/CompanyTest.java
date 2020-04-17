@@ -55,7 +55,7 @@ public class CompanyTest extends BaseWebDrivingTest {
     public void searchCompany(){
         log.info("Ищем кампанию: [{}]", testCompany);
         companyPage.searchCompany(testCompany);
-        Assert.assertEquals(companyPage.companiesList.size(),2,"Найдено больше одной кампании или ни одной");
+        Assert.assertEquals(companyPage.companiesList.size(),1,"Найдено больше одной кампании или ни одной");
     }
 
     @Description("Нажать кнопку 'Подписаться'. " +
