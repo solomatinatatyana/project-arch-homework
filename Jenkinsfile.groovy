@@ -35,7 +35,7 @@ node {
     }catch(ex){
         currentBuild.result = 'FAILURE'
     }finally{
-        stage('GenerateAllureReports') {
+        stage('Generate Allure Reports') {
             allure([
                     includeProperties: false,
                     jdk: '',
