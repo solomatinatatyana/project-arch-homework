@@ -98,12 +98,13 @@ def notifySlack(String buildStatus = 'STARTED') {
     } else {
         color = '#FF9FA1'
     }
-    def msg = "${buildStatus}: `${env.JOB_NAME}` #${env.BUILD_NUMBER}:\n${env.BUILD_URL}allure " +
+    def msg = "${buildStatus}: `${env.JOB_NAME}` #${env.BUILD_NUMBER}:\n${env.BUILD_URL}allure \n" +
     "Branch: $BRANCH \n" +
     "Browser: $browser \n" +
-    "Total: \n" +
-    "Success: \n" +
-    "Fail: \n" +
-    "Skipped: \n"
+    "Total: ${currentBuild.testResultAction.totalCount}\n" +
+    "Passed: ${TEST_COUNTS}\n" +
+    "Failed: \n" +
+    "Skipped: \n" +
+    "Duration:  \n" +
     slackSend(color: color, message: msg)
 }
