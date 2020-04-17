@@ -90,13 +90,22 @@ node {
 
 
 def notifySlack(String buildStatus = 'STARTED') {
-    AbstractTestResultAction testResultAction = currentBuild.rawBuild.getAction(TestNGTestResultBuildAction.class)
-    def total = testResultAction.totalCount
-    def failed = testResultAction.failCount
-    def skipped = testResultAction.skipCount
-    def passed = total - failed - skipped
-
-
+    def total
+    def failed
+    def skipped
+    def passed
+    AbstractTestResultAction testResultAction = currentBuild.rawBuild.getAction(AbstractTestResultAction.class)
+    if (testResultAction != null || testResultAction!=0){
+        total = testResultAction.getTotalCount()
+        failed = testResultAction.failCount
+        skipped = testResultAction.skipCount
+        passed = total - failed - skipped
+    }else {
+        total = "Тесты не найдены"
+        failed = "Тесты не найдены"
+        skipped = "Тесты не найдены"
+        passed = "Тесты не найдены"
+    }
     buildStatus = buildStatus ?: 'SUCCESS'
     def color
     if (buildStatus == 'STARTED') {
