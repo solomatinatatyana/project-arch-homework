@@ -11,8 +11,6 @@ node {
     RECIPIENT = "tokio9507@gmail.com"
     MAVEN_HOME = "C:/Users/Tatiana/maven/apache-maven-3.6.3/bin/"
 
-
-
     try {
         stage('Checkout'){
             properties([[$class: 'JiraProjectProperty'],
