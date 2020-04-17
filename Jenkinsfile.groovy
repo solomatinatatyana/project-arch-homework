@@ -95,7 +95,7 @@ def notifySlack(String buildStatus = 'STARTED') {
     def skipped
     def passed
     AbstractTestResultAction testResultAction = currentBuild.rawBuild.getAction(AbstractTestResultAction.class)
-    if (testResultAction != null || testResultAction!=0){
+    if (testResultAction != null){
         echo testResultAction
         total = testResultAction.getTotalCount()
         failed = testResultAction.failCount
