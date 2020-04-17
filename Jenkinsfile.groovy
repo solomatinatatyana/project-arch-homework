@@ -1,3 +1,4 @@
+import hudson.tasks.test.TestNGTestResultBuildAction
 import hudson.tasks.test.AbstractTestResultAction
 
 node {
@@ -90,11 +91,12 @@ node {
 
 
 def notifySlack(String buildStatus = 'STARTED') {
-    AbstractTestResultAction testResultAction = currentBuild.rawBuild.getAction(AbstractTestResultAction.class)
+    TestNGTestResultBuildAction testResultAction = currentBuild.rawBuild.getAction(TestNGTestResultBuildAction.class)
     def total = testResultAction.totalCount
     def failed = testResultAction.failCount
     def skipped = testResultAction.skipCount
     def passed = total - failed - skipped
+
 
     buildStatus = buildStatus ?: 'SUCCESS'
     def color
