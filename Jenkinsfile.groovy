@@ -102,7 +102,7 @@ def notifySlack(String buildStatus = 'STARTED') {
     "Branch: $BRANCH \n" +
     "Browser: $browser \n" +
     "Total: ${currentBuild.result}\n" +
-    "Passed: ${TEST_COUNTS}\n" +
+    "Passed: \n" +
     "Failed: \n" +
     "Skipped: \n" +
     "Duration:  \n"
