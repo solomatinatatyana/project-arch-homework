@@ -10,6 +10,7 @@ node {
     MAVEN_HOME = "C:/Users/Tatiana/maven/apache-maven-3.6.3/bin/"
 
 
+
     try {
         stage('Run Tests') {
             properties([pipelineTriggers([githubPush()])])
