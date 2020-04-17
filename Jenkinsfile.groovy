@@ -4,13 +4,11 @@ import jenkins.*
 import jenkins.model.*
 import hudson.*
 import hudson.model.*
-
+properties([pipelineTriggers([githubPush()])])
 node {
 
     RECIPIENT = "tokio9507@gmail.com"
     MAVEN_HOME = "C:/Users/Tatiana/maven/apache-maven-3.6.3/bin/"
-
-    properties([pipelineTriggers([githubPush()])])
 
     try {
         stage('Run Tests') {
