@@ -95,7 +95,6 @@ node {
     }
 }
 
-@NonCPS
 def notifySlack(String buildStatus = 'STARTED') {
     def total
     def failed
