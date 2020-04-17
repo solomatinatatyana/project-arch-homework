@@ -1,3 +1,5 @@
+import hudson.tasks.test.AbstractTestResultAction
+
 node {
 
     RECIPIENT = "tokio9507@gmail.com"
@@ -86,7 +88,14 @@ node {
     }
 }
 
+
 def notifySlack(String buildStatus = 'STARTED') {
+    AbstractTestResultAction testResultAction = currentBuild.rawBuild.getAction(AbstractTestResultAction.class)
+    def total = testResultAction.totalCount
+    def failed = testResultAction.failCount
+    def skipped = testResultAction.skipCount
+    def passed = total - failed - skipped
+
     buildStatus = buildStatus ?: 'SUCCESS'
     def color
     if (buildStatus == 'STARTED') {
@@ -101,10 +110,10 @@ def notifySlack(String buildStatus = 'STARTED') {
     def msg = "${buildStatus}: `${env.JOB_NAME}` #${env.BUILD_NUMBER}:\n${env.BUILD_URL}allure \n" +
     "Branch: $BRANCH \n" +
     "Browser: $browser \n" +
-    "Total: ${currentBuild.result}\n" +
-    "Passed: \n" +
-    "Failed: \n" +
-    "Skipped: \n" +
+    "Total: ${total}\n" +
+    "Passed: ${passed}\n" +
+    "Failed: ${failed}\n" +
+    "Skipped: ${skipped}\n" +
     "Duration: $BUILD_DURATION\n"
     //slackSend (botUser: true, channel: 'solomka_jenkins', color: color, message: msg, teamDomain: 'otus-qa', tokenCredentialId: 'solomka_token', username: 'jenkins')
     slackSend(color: color, message: msg)
