@@ -1,5 +1,5 @@
 import hudson.tasks.test.AbstractTestResultAction
-
+import hudson.model.*
 node {
 
     RECIPIENT = "tokio9507@gmail.com"
@@ -94,6 +94,7 @@ def notifySlack(String buildStatus = 'STARTED') {
     def failed
     def skipped
     def passed
+    def buildNumber= build.number
     AbstractTestResultAction testResultAction = currentBuild.rawBuild.getAction(AbstractTestResultAction.class)
     if (testResultAction != null){
         total = testResultAction.getTotalCount()
@@ -101,6 +102,7 @@ def notifySlack(String buildStatus = 'STARTED') {
         skipped = testResultAction.getSkipCount()
         passed = total - failed - skipped
     }else {
+        echo ${buildNumber}
         total = "not found tests"
         failed = "not found tests"
         skipped = "not found tests"
