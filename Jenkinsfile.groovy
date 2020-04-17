@@ -4,7 +4,7 @@ import jenkins.*
 import jenkins.model.*
 import hudson.*
 import hudson.model.*
-properties([pipelineTriggers([githubPush()])])
+
 
 node {
 
@@ -14,8 +14,15 @@ node {
 
 
     try {
-        stage('Run Tests') {
+        stage('Checkout'){
+            properties(
+                    [
+                            pipelineTriggers([cron('H/5 * * * *')])
+                    ])
             checkout([$class: 'GitSCM', branches: [[name: '*/master']],  userRemoteConfigs: [[credentialsId: '62b53291-36d6-4ccb-95cf-efa68b08f788', url: 'https://github.com/solomatinatatyana/project-arch-homework']]])
+        }
+
+        stage('Run Tests') {
             bat 'echo Run'
             bat label: '', script: MAVEN_HOME + 'mvn clean test -Dbrowser='+BROWSER
             //runTests:{build 'Test'}
