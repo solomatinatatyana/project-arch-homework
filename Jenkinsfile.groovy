@@ -106,6 +106,6 @@ def notifySlack(String buildStatus = 'STARTED') {
     "Failed: \n" +
     "Skipped: \n" +
     "Duration: \n"
-    slackSend (botUser: true, channel: 'solomka_jenkins', color: color, message: msg, teamDomain: 'otus-qa', tokenCredentialId: 'solomka_token', username: 'jenkins')
-    //slackSend(color: color, message: msg)
+    //slackSend (botUser: true, channel: 'solomka_jenkins', color: color, message: msg, teamDomain: 'otus-qa', tokenCredentialId: 'solomka_token', username: 'jenkins')
+    slackSend(color: color, message: msg)
 }
