@@ -1,3 +1,4 @@
+#!groovy
 import hudson.tasks.test.AbstractTestResultAction
 import jenkins.*
 import jenkins.model.*
