@@ -101,10 +101,11 @@ def notifySlack(String buildStatus = 'STARTED') {
     def msg = "${buildStatus}: `${env.JOB_NAME}` #${env.BUILD_NUMBER}:\n${env.BUILD_URL}allure \n" +
     "Branch: $BRANCH \n" +
     "Browser: $browser \n" +
-    "Total: ${currentBuild.testResultAction.totalCount}\n" +
+    "Total: ${currentBuild.result}\n" +
     "Passed: ${TEST_COUNTS}\n" +
     "Failed: \n" +
     "Skipped: \n" +
-    "Duration:  \n" +
-    slackSend(color: color, message: msg)
+    "Duration:  \n"
+    slackSend (botUser: true, channel: 'solomka_jenkins', color: color, message: msg, teamDomain: 'otus_qa', tokenCredentialId: 'solomka_token', username: 'jenkins')
+    //slackSend(color: color, message: msg)
 }
