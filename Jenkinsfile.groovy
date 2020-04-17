@@ -104,6 +104,6 @@ def notifySlack(String buildStatus = 'STARTED') {
     "Total: \n" +
     "Success: \n" +
     "Fail: \n" +
-    "Skipped: \n" +
+    "Skipped: \n"
     slackSend(color: color, message: msg)
 }
