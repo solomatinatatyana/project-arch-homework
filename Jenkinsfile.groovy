@@ -1,5 +1,9 @@
 import hudson.tasks.test.AbstractTestResultAction
+import jenkins.*
+import jenkins.model.*
+import hudson.*
 import hudson.model.*
+
 node {
 
     RECIPIENT = "tokio9507@gmail.com"
@@ -83,12 +87,12 @@ node {
                     replyTo: "${RECIPIENT}"
         }
         stage('Send Slack Notification Report'){
-            notifySlack(currentBuild.result)
+            notifySlack(currentBuild.currentResult)
         }
     }
 }
 
-
+@NonCPS
 def notifySlack(String buildStatus = 'STARTED') {
     def total
     def failed
