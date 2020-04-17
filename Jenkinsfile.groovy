@@ -9,7 +9,6 @@ node {
 
     RECIPIENT = "tokio9507@gmail.com"
     MAVEN_HOME = "C:/Users/Tatiana/maven/apache-maven-3.6.3/bin/"
-    REPORT_MSG = '''123'''
 
     try {
         stage('Run Tests') {
@@ -99,7 +98,6 @@ def notifySlack(String buildStatus = 'STARTED') {
     def failed
     def skipped
     def passed
-    def buildNumber= build.number
     AbstractTestResultAction testResultAction = currentBuild.rawBuild.getAction(AbstractTestResultAction.class)
     if (testResultAction != null){
         total = testResultAction.getTotalCount()
@@ -107,7 +105,6 @@ def notifySlack(String buildStatus = 'STARTED') {
         skipped = testResultAction.getSkipCount()
         passed = total - failed - skipped
     }else {
-        echo ${buildNumber}
         total = "not found tests"
         failed = "not found tests"
         skipped = "not found tests"
