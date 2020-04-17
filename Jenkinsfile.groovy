@@ -96,16 +96,15 @@ def notifySlack(String buildStatus = 'STARTED') {
     def passed
     AbstractTestResultAction testResultAction = currentBuild.rawBuild.getAction(AbstractTestResultAction.class)
     if (testResultAction != null){
-        echo testResultAction
         total = testResultAction.getTotalCount()
-        failed = testResultAction.failCount
-        skipped = testResultAction.skipCount
+        failed = testResultAction.getFailCount()
+        skipped = testResultAction.getSkipCount()
         passed = total - failed - skipped
     }else {
-        total = "Тесты не найдены"
-        failed = "Тесты не найдены"
-        skipped = "Тесты не найдены"
-        passed = "Тесты не найдены"
+        total = "not found tests"
+        failed = "not found tests"
+        skipped = "not found tests"
+        passed = "not found tests"
     }
     buildStatus = buildStatus ?: 'SUCCESS'
     def color
@@ -126,6 +125,6 @@ def notifySlack(String buildStatus = 'STARTED') {
     "Failed: ${failed}\n" +
     "Skipped: ${skipped}\n" +
     "Duration: $BUILD_DURATION\n"
-    //slackSend (botUser: true, channel: 'solomka_jenkins', color: color, message: msg, teamDomain: 'otus-qa', tokenCredentialId: 'solomka_token', username: 'jenkins')
-    slackSend(color: color, message: msg)
+    slackSend (botUser: true, channel: 'solomka_jenkins', color: color, message: msg, teamDomain: 'otus-qa', tokenCredentialId: 'solomka_token')
+    //slackSend(color: color, message: msg)
 }
