@@ -45,7 +45,6 @@ node {
             ])
         }
 
-
         stage ('SendMailReport'){
             echo "Sending e-mail"
             BUILD_DURATION = "${currentBuild.durationString.replace(' and counting', '')}"
