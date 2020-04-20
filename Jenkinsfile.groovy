@@ -1,10 +1,24 @@
-#!groovy
+#!/usr/bin/env groovy
 import hudson.tasks.test.AbstractTestResultAction
 import jenkins.*
 import jenkins.model.*
 import hudson.*
 import hudson.model.*
+import hudson.model.Environment
+import hudson.EnvVars
 
+def build = Thread.currentThread().executable
+
+if (manager.logContains(".*Total time: (.*)")) {
+    def match = manager.getLogMatcher('.*Total time: (.*)')
+    if (match ?.matches()) {
+        duration = match.group(1)
+        def env = [DURATION: duration]
+        build.environments.add(0, Environment.create(new EnvVars(env)))
+    }
+} else {
+    manager.addWarningBadge("matcher not found")
+}
 
 node {
 
