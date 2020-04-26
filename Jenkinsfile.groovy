@@ -8,7 +8,6 @@ import hudson.model.*
 node {
 
     RECIPIENT = "tokio9507@gmail.com"
-    MAVEN_HOME = "C:/Users/Tatiana/maven/apache-maven-3.6.3/bin/"
 
     try {
         stage('Checkout'){
@@ -27,15 +26,10 @@ node {
         }
 
         stage('Run Tests') {
-            withMaven(maven: 'maven')
-                    {
+            withMaven(maven: 'maven') {
                 bat 'echo Run'
                 bat label: '', script: 'mvn clean test -Dbrowser='+BROWSER
             }
-
-            //bat 'echo Run'
-            //bat label: '', script: 'mvn clean test -Dbrowser='+BROWSER
-            //runTests:{build 'Test'}
         }
     }catch(ex){
         currentBuild.result = 'FAILURE'
