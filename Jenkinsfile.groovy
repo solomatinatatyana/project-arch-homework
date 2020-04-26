@@ -107,7 +107,7 @@ node {
 }
 
 def notifySlack(String buildStatus = 'STARTED') {
-    def total
+    /*def total
     def failed
     def skipped
     def passed
@@ -122,7 +122,7 @@ def notifySlack(String buildStatus = 'STARTED') {
         failed = "not found tests"
         skipped = "not found tests"
         passed = "not found tests"
-    }
+    }*/
     buildStatus = buildStatus ?: 'SUCCESS'
     def color
     if (buildStatus == 'STARTED') {
@@ -137,10 +137,10 @@ def notifySlack(String buildStatus = 'STARTED') {
     def msg = "${buildStatus}: `${env.JOB_NAME}` #${env.BUILD_NUMBER}:\n${env.BUILD_URL}allure \n" +
     "Branch: $BRANCH \n" +
     "Browser: $browser \n" +
-    "Total: ${total}\n" +
-    "Passed: ${passed}\n" +
-    "Failed: ${failed}\n" +
-    "Skipped: ${skipped}\n" +
+    //"Total: ${total}\n" +
+    //"Passed: ${passed}\n" +
+    //"Failed: ${failed}\n" +
+    //"Skipped: ${skipped}\n" +
     "Duration: $BUILD_DURATION\n"
     slackSend (channel: 'solomka_jenkins', color: color, message: msg, teamDomain: 'otus-qa', tokenCredentialId: 'solomka_token')
     //slackSend(color: color, message: msg)
