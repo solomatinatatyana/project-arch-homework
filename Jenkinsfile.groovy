@@ -26,7 +26,7 @@ node {
         }
 
         stage('Run Tests') {
-            withMaven(maven: 'maven') {
+            withMaven(jdk: 'jdk_1.8.0_251', maven: 'maven') {
                 bat 'echo Run'
                 bat label: '', script: 'mvn clean test -Dbrowser='+BROWSER
             }
