@@ -16,8 +16,9 @@ import org.springframework.stereotype.Component;
 import java.io.File;
 
 @Component
-public class ProfilePage extends AbstractPage{
+public class ProfilePage extends AbstractPage {
     private Logger log = LogManager.getLogger(ProfilePage.class);
+
     public ProfilePage(WebDriver driver) {
         super(driver);
         PageFactory.initElements(driver, this);
@@ -46,8 +47,8 @@ public class ProfilePage extends AbstractPage{
     @FindBy(css = ".user-avatar__image")
     public WebElement userAvatarUploaded;
 
-    public void uploadPhoto(String path){
-        WebDriverWait wait = new WebDriverWait(driver,50L);
+    public void uploadPhoto(String path) {
+        WebDriverWait wait = new WebDriverWait(driver, 50L);
         wait.until(ExpectedConditions.visibilityOfAllElements(this.uploadForm));
         File file = new File(path);
         this.uploadFileInput.sendKeys(file.getAbsolutePath());
@@ -56,15 +57,15 @@ public class ProfilePage extends AbstractPage{
     }
 
     @Step("Сохранить изменения")
-    public void save(){
+    public void save() {
         this.saveButton.click();
-        WebDriverWait wait = new WebDriverWait(driver,50L);
+        WebDriverWait wait = new WebDriverWait(driver, 50L);
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(".message.message_successfull")));
     }
 
     @Step("Удалить фото профиля")
-    public void deletePhoto(){
-        WebDriverWait wait = new WebDriverWait(driver,50L);
+    public void deletePhoto() {
+        WebDriverWait wait = new WebDriverWait(driver, 50L);
         wait.until(ExpectedConditions.visibilityOfAllElements(this.deleteButton));
         this.deleteButton.click();
         log.info("Картинка успешно удалена");

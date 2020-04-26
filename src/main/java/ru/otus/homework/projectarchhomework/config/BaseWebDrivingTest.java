@@ -15,16 +15,16 @@ public class BaseWebDrivingTest extends BaseTest {
     @Autowired
     public Config config;
 
-    public void setDriver(WebDriver driver){
+    public void setDriver(WebDriver driver) {
         this.driver = driver;
     }
 
-    protected  static String browser = System.getProperty("browser").toUpperCase();
+    protected static String browser = System.getProperty("browser").toUpperCase();
 
     @BeforeClass(alwaysRun = true)
-    public void setUp(){
+    public void setUp() {
         super.setUp();
-        log.info("Test: [{}]",this.getClass().asSubclass(this.getClass()).getSimpleName());
+        log.info("Test: [{}]", this.getClass().asSubclass(this.getClass()).getSimpleName());
         log.info("Browser: [{}]", BrowserType.valueOf(browser));
         this.setDriver(config.getDriver());
     }

@@ -15,6 +15,7 @@ public class SocialButtonsBlock extends AbstractPage {
         super(driver);
         PageFactory.initElements(driver, this);
     }
+
     @FindBy(css = ".socials-buttons.s-buttons>a")
     public List<WebElement> socialButtons;
 

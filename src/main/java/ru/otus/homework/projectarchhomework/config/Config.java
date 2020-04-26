@@ -20,7 +20,7 @@ import java.util.concurrent.TimeUnit;
 public class Config {
     protected WebDriver driver;
     protected MutableCapabilities options;
-    protected  static String browser = System.getProperty("browser").toUpperCase();
+    protected static String browser = System.getProperty("browser").toUpperCase();
 
     @Value("${sut.url}")
     private String url;
@@ -35,9 +35,13 @@ public class Config {
         return url;
     }
 
-    public String getUsername() { return username; }
+    public String getUsername() {
+        return username;
+    }
 
-    public String getPassword() { return password; }
+    public String getPassword() {
+        return password;
+    }
 
     @Bean
     public static PropertySourcesPlaceholderConfigurer propertyConfigInDev() {
@@ -52,7 +56,7 @@ public class Config {
         this.options = new MutableCapabilities();
         this.driver = webApplicationService.initDriver(BrowserType.valueOf(browser), options);
         this.driver.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);
-        this.driver.manage().timeouts().setScriptTimeout(20,TimeUnit.SECONDS);
+        this.driver.manage().timeouts().setScriptTimeout(20, TimeUnit.SECONDS);
         this.driver.manage().window().maximize();
         return this.driver;
     }

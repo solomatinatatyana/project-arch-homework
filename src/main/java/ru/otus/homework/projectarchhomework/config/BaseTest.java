@@ -14,7 +14,7 @@ public class BaseTest extends AbstractTestNGSpringContextTests {
     protected static Logger log;
 
     @BeforeClass(alwaysRun = true)
-    public void setUp(){
+    public void setUp() {
         log = LogManager.getLogger("TestRunner");
     }
 }

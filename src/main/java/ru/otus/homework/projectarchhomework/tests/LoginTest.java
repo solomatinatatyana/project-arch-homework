@@ -25,13 +25,13 @@ import ru.otus.homework.projectarchhomework.pagesandblocks.pages.LoginPage;
 import ru.otus.homework.projectarchhomework.pagesandblocks.pages.MainPage;
 import ru.otus.homework.projectarchhomework.services.auth.AuthorizationService;
 
-@SpringBootTest(classes =  ProjectArchHomeworkApplication.class)
+@SpringBootTest(classes = ProjectArchHomeworkApplication.class)
 @ContextConfiguration(classes = Config.class)
 @Epic("Spring Tests")
 @Feature("Тесты с авторизацией")
 @Story("Проверка авторизации пользователя. Положительный и негативный сценарии")
 //@Test(groups = "smoke")
-public class LoginTest extends BaseWebDrivingTest{
+public class LoginTest extends BaseWebDrivingTest {
 
     private Logger log = LogManager.getLogger(LoginTest.class);
     private SoftAssert softAssert = new SoftAssert();
@@ -46,17 +46,18 @@ public class LoginTest extends BaseWebDrivingTest{
 
     @DataProvider(name = "pictColors")
     public Object[][] SocialNetworks() {
-        return new Object[][] {
-                {loginPage.socialButtonsBlock.facebookButton,SocialNetworks.FACEBOOK.getColor()},
-                {loginPage.socialButtonsBlock.vkButton,SocialNetworks.VK.getColor()},
-                {loginPage.socialButtonsBlock.twitterButton,SocialNetworks.TWITTER.getColor()},
-                {loginPage.socialButtonsBlock.githubButton,SocialNetworks.GITHUB.getColor()},
-                {loginPage.socialButtonsBlock.liveIdButton,SocialNetworks.LIVE_ID.getColor()},
-                {loginPage.socialButtonsBlock.googleButton,SocialNetworks.GOOGLE.getColor()}
-        };}
+        return new Object[][]{
+                {loginPage.socialButtonsBlock.facebookButton, SocialNetworks.FACEBOOK.getColor()},
+                {loginPage.socialButtonsBlock.vkButton, SocialNetworks.VK.getColor()},
+                {loginPage.socialButtonsBlock.twitterButton, SocialNetworks.TWITTER.getColor()},
+                {loginPage.socialButtonsBlock.githubButton, SocialNetworks.GITHUB.getColor()},
+                {loginPage.socialButtonsBlock.liveIdButton, SocialNetworks.LIVE_ID.getColor()},
+                {loginPage.socialButtonsBlock.googleButton, SocialNetworks.GOOGLE.getColor()}
+        };
+    }
 
     @BeforeClass(alwaysRun = true)
-    public void init(){
+    public void init() {
         actions = new Actions(driver);
         authorizationService.goToLoginPage(config.getUrl());
     }
@@ -64,7 +65,7 @@ public class LoginTest extends BaseWebDrivingTest{
     @Description("Проверить, что отображаются иконки всех социальных сетей и у каждой иконки при наведении свой цвет")
     @Test(dataProvider = "pictColors")
     public void checkSocialPictogram(WebElement button, String color) {
-        softAssert.assertTrue(button.isDisplayed(),"икнока соц. сети: " + button.getText() + " не отображается");
+        softAssert.assertTrue(button.isDisplayed(), "икнока соц. сети: " + button.getText() + " не отображается");
         moveToElement(button);
         String colorCurrent = getColorOfElement(button);
         softAssert.assertEquals(colorCurrent, color, "Неверный цвет у элемента: " + button.getText());
@@ -75,38 +76,39 @@ public class LoginTest extends BaseWebDrivingTest{
     @Test(alwaysRun = true, dependsOnMethods = "checkSocialPictogram")
     public void checkLoginSuccess() {
         log.info("Логинимся по юзером {}", config.getUsername());
-        authorizationService.doLogin(config.getUrl(),config.getUsername(), config.getPassword());
+        authorizationService.doLogin(config.getUrl(), config.getUsername(), config.getPassword());
         mainPage.openProfileMenu();
         Assert.assertTrue(mainPage.profileSettingBlock.profileInfo.getText().contains("Solomka95"),
                 "Неверное название профиля");
     }
 
     @Description("Проверить неуспешную авторизацию")
-    @Test(dependsOnMethods = "checkLoginSuccess",alwaysRun = true)
+    @Test(dependsOnMethods = "checkLoginSuccess", alwaysRun = true)
     public void checkLoginFail() {
         mainPage.userProfileButton.click();
         log.info("Разлогиниваемся");
         authorizationService.logout();
         log.info("Логинимся с неверным паролем");
         authorizationService.doLogin(config.getUsername(), "123");
-        WebDriverWait wait = new WebDriverWait(driver,100L);
+        WebDriverWait wait = new WebDriverWait(driver, 100L);
         wait.until(ExpectedConditions.visibilityOfAllElements(loginPage.username));
-        softAssert.assertTrue(loginPage.noticeElement.isDisplayed(),"Плашка с ошибкой не отобразилась");
-        softAssert.assertEquals(Color.fromString(loginPage.noticeElement.getCssValue("background-color")).asHex(),"#dd6c6c",
+        softAssert.assertTrue(loginPage.noticeElement.isDisplayed(), "Плашка с ошибкой не отобразилась");
+        softAssert.assertEquals(Color.fromString(loginPage.noticeElement.getCssValue("background-color")).asHex(), "#dd6c6c",
                 "Плашка с ошибкой не красного цвета");
         softAssert.assertEquals(loginPage.noticeElement.findElement(By.tagName("div")).getText(),
                 "Пользователь с такой электронной почтой или паролем не найден",
                 "Неверный текст ошибки");
         softAssert.assertAll();
     }
-//--------------------------------------------------METHODS-------------------------------------------------------------
+
+    //--------------------------------------------------METHODS-------------------------------------------------------------
     @Step("Получить цвет иконки")
-    private String getColorOfElement(WebElement element){
+    private String getColorOfElement(WebElement element) {
         return Color.fromString(element.getCssValue("background-color")).asHex();
     }
 
     @Step("Перейти на иконку")
-    private void moveToElement(WebElement element){
+    private void moveToElement(WebElement element) {
         actions.moveToElement(element).build().perform();
     }
 }

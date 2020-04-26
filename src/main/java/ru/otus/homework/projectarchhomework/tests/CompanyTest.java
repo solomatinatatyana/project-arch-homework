@@ -24,7 +24,7 @@ import ru.otus.homework.projectarchhomework.pagesandblocks.pages.CompanyPage;
 import ru.otus.homework.projectarchhomework.pagesandblocks.pages.MainPage;
 import ru.otus.homework.projectarchhomework.services.auth.AuthorizationService;
 
-@SpringBootTest(classes =  ProjectArchHomeworkApplication.class)
+@SpringBootTest(classes = ProjectArchHomeworkApplication.class)
 @ContextConfiguration(classes = Config.class)
 @Epic("Spring Tests")
 @Feature("Тесты с авторизацией")
@@ -41,52 +41,52 @@ public class CompanyTest extends BaseWebDrivingTest {
     @Autowired
     private CompanyPage companyPage;
 
-    private static final String testCompany= "Сбербанк";
+    private static final String testCompany = "Сбербанк";
 
     @BeforeClass(alwaysRun = true)
-    public void init(){
+    public void init() {
         actions = new Actions(driver);
-        authorizationService.doLogin(config.getUrl(),config.getUsername(),config.getPassword());
+        authorizationService.doLogin(config.getUrl(), config.getUsername(), config.getPassword());
         mainPage.goToNavPage(mainPage.mainPageTabsBlock.companyButton);
     }
 
     @Description("Найти компанию - Сбербанк. Проверить, что компания найдена")
     @Test()
-    public void searchCompany(){
+    public void searchCompany() {
         log.info("Ищем кампанию: [{}]", testCompany);
         companyPage.searchCompany(testCompany);
-        Assert.assertEquals(companyPage.companiesList.size(),1,"Найдено больше одной кампании или ни одной");
+        Assert.assertEquals(companyPage.companiesList.size(), 1, "Найдено больше одной кампании или ни одной");
     }
 
     @Description("Нажать кнопку 'Подписаться'. " +
             "Проверить, что при наведении кнопка меняет цвет на зеленый" +
             "Проверить, что после подписки отображается 'Подписан'")
     @Test(dependsOnMethods = "searchCompany", alwaysRun = true)
-    public void checkSubscription(){
+    public void checkSubscription() {
         companyPage.subscribe("follow");
         log.info("Подписка на компанию [{}] оформлена", testCompany);
         actions.moveToElement(companyPage.companyRightGrid).build().perform();
-        WebDriverWait wait = new WebDriverWait(driver,50L);
+        WebDriverWait wait = new WebDriverWait(driver, 50L);
         wait.until(ExpectedConditions.visibilityOfAllElements(companyPage.unsubscribeButton));
         String text = companyPage.unsubscribeButton.getText();
         softAssert.assertEquals(text, "Подписан", "Неверное название кнопки");
-        softAssert.assertEquals(Color.fromString(companyPage.unsubscribeButton.getCssValue("background-color")).asHex(),"#689d29",
+        softAssert.assertEquals(Color.fromString(companyPage.unsubscribeButton.getCssValue("background-color")).asHex(), "#689d29",
                 "Неверный цвет кнопки - не зеленый");
         softAssert.assertAll();
     }
 
     @Description("Нажать кнопку 'Отписаться'. Проверить, что после отписки отображается 'Подписаться'")
     @Test(dependsOnMethods = "checkSubscription", alwaysRun = true)
-    public void checkUnSubscription(){
+    public void checkUnSubscription() {
         companyPage.subscribe("unfollow");
         log.info("Подписка на компанию [{}] отменена", testCompany);
         actions.moveToElement(companyPage.companyRightGrid).build().perform();
-        WebDriverWait wait = new WebDriverWait(driver,50L);
+        WebDriverWait wait = new WebDriverWait(driver, 50L);
         wait.until(ExpectedConditions.visibilityOfAllElements(companyPage.subscribeButton));
         String text = companyPage.subscribeButton.getText();
         softAssert.assertEquals(text, "Подписаться", "Неверное название кнопки");
         System.out.println(Color.fromString(companyPage.subscribeButton.getCssValue("background-color")).asHex());
-        softAssert.assertEquals(Color.fromString(companyPage.subscribeButton.getCssValue("background-color")).asHex(),"#000000",
+        softAssert.assertEquals(Color.fromString(companyPage.subscribeButton.getCssValue("background-color")).asHex(), "#000000",
                 "Неверный цвет кнопки - не белый");
         softAssert.assertAll();
     }
@@ -94,10 +94,10 @@ public class CompanyTest extends BaseWebDrivingTest {
     @Description("Отфильтровать все компании по фильтру 'Информационная безопастность. " +
             "Проверить, что отображается столько компаний, сколько указано рядом с фильтром'")
     @Test(dependsOnMethods = "checkUnSubscription", alwaysRun = true)
-    public void checkFilterByTopic(){
+    public void checkFilterByTopic() {
         companyPage.filterCompanyByTopic(companyPage.companySideBarBlock.infoSecurityTopicButton);
         int countCompanies = companyPage.getCountCompaniesByTopic(companyPage.companySideBarBlock.infoSecurityTopicButton);
         int currentFilteredCompanies = companyPage.companiesList.size();
-        Assert.assertEquals(currentFilteredCompanies,countCompanies, "Количество компаний по фильтру не совпадает с найденными");
+        Assert.assertEquals(currentFilteredCompanies, countCompanies, "Количество компаний по фильтру не совпадает с найденными");
     }
 }

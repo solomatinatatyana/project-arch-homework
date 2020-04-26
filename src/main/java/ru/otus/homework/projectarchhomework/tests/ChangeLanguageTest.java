@@ -21,7 +21,7 @@ import ru.otus.homework.projectarchhomework.services.auth.AuthorizationService;
 
 import java.util.concurrent.TimeUnit;
 
-@SpringBootTest(classes =  ProjectArchHomeworkApplication.class)
+@SpringBootTest(classes = ProjectArchHomeworkApplication.class)
 @ContextConfiguration(classes = Config.class)
 @Epic("Spring Tests")
 @Feature("Тесты с авторизацией")
@@ -35,25 +35,25 @@ public class ChangeLanguageTest extends BaseWebDrivingTest {
     private MainPage mainPage;
 
     @BeforeClass(alwaysRun = true)
-    public void init(){
-        authorizationService.doLogin(config.getUrl(), config.getUsername(),config.getPassword());
+    public void init() {
+        authorizationService.doLogin(config.getUrl(), config.getUsername(), config.getPassword());
     }
 
     @Description("Открыть настройки языка. Сменить язык интерфейса на английский." +
             "Проверить, что язык сменился.")
     @Test()
-    public void checkChangeLanguage(){
+    public void checkChangeLanguage() {
         mainPage.openProfileMenu();
         mainPage.profileSettingBlock.languageSettingsButton.click();
         mainPage.changeInterfaceLanguage(mainPage.languageSettingsBlock.interfaceEnToggle);
         String header = mainPage.languageSettingsBlock.headerInterface.getText();
         mainPage.saveSettings();
-        Assert.assertEquals(header,"Language settings",
+        Assert.assertEquals(header, "Language settings",
                 "Неверный заголовок интерфейса");
     }
 
     @AfterClass(alwaysRun = true)
-    public void reset(){
+    public void reset() {
         /*Сменить язык обратно на русский*/
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         mainPage.openProfileMenu();

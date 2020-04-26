@@ -19,7 +19,7 @@ import ru.otus.homework.projectarchhomework.pagesandblocks.pages.MainPage;
 import ru.otus.homework.projectarchhomework.pagesandblocks.pages.ProfilePage;
 import ru.otus.homework.projectarchhomework.services.auth.AuthorizationService;
 
-@SpringBootTest(classes =  ProjectArchHomeworkApplication.class)
+@SpringBootTest(classes = ProjectArchHomeworkApplication.class)
 @ContextConfiguration(classes = Config.class)
 @Epic("Spring Tests")
 @Feature("Тесты с авторизацией")
@@ -35,8 +35,8 @@ public class ProfilePhotoTest extends BaseWebDrivingTest {
     private ProfilePage profilePage;
 
     @BeforeClass(alwaysRun = true)
-    public void init(){
-        authorizationService.doLogin(config.getUrl(), config.getUsername(),config.getPassword());
+    public void init() {
+        authorizationService.doLogin(config.getUrl(), config.getUsername(), config.getPassword());
         mainPage.openProfileMenu();
         mainPage.profileSettingBlock.profileInfo.click();
         profilePage.editProfileButton.click();
@@ -44,7 +44,7 @@ public class ProfilePhotoTest extends BaseWebDrivingTest {
 
     @Description("Загрузить аватар допустимого размера до 96х96. Проверить, что аватар загружен")
     @Test()
-    public void uploadCorrectPhoto(){
+    public void uploadCorrectPhoto() {
         log.info("Загружаем аватар допустимого размера...");
         profilePage.uploadPhoto("src/main/resources/images/success.png");
         profilePage.save();
@@ -53,16 +53,16 @@ public class ProfilePhotoTest extends BaseWebDrivingTest {
         mainPage.openProfileMenu();
         mainPage.profileSettingBlock.profileInfo.click();
         profilePage.editProfileButton.click();
-        Assert.assertTrue(profilePage.isElementPresent(profilePage.userAvatarUpl),"Аватар не загрузился");
+        Assert.assertTrue(profilePage.isElementPresent(profilePage.userAvatarUpl), "Аватар не загрузился");
     }
 
     @Description("Загрузить недопустимый аватар. Проверить, что аватар не загрузился")
     @Test(dependsOnMethods = "uploadCorrectPhoto", alwaysRun = true)
-    public void uploadUnCorrectPhoto(){
+    public void uploadUnCorrectPhoto() {
         profilePage.deletePhoto();
         profilePage.save();
         log.info("Загружаем аватару недопустимого размера...");
         profilePage.uploadPhoto("src/main/resources/images/fail.png");
-        Assert.assertFalse(profilePage.isElementPresent(profilePage.userAvatarUpl),"Аватар загрузился");
+        Assert.assertFalse(profilePage.isElementPresent(profilePage.userAvatarUpl), "Аватар загрузился");
     }
 }

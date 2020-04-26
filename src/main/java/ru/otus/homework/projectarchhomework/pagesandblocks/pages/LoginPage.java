@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 import ru.otus.homework.projectarchhomework.pagesandblocks.blocks.SocialButtonsBlock;
 
 @Component
-public class LoginPage extends AbstractPage{
+public class LoginPage extends AbstractPage {
     @Autowired
     public SocialButtonsBlock socialButtonsBlock;
 
@@ -18,19 +18,27 @@ public class LoginPage extends AbstractPage{
         PageFactory.initElements(driver, this);
     }
 
-    /**Кнопка "Войти"*/
+    /**
+     * Кнопка "Войти"
+     */
     @FindBy(css = "a[id='login']")
     public WebElement signButton;
 
-    /**Поле "Login"*/
+    /**
+     * Поле "Login"
+     */
     @FindBy(css = "input[type=email]")
     public WebElement username;
 
-    /**Поле "Password"*/
+    /**
+     * Поле "Password"
+     */
     @FindBy(css = "input[type=password]")
     public WebElement pass;
 
-    /**Кнопка "Войти"*/
+    /**
+     * Кнопка "Войти"
+     */
     @FindBy(css = "button[name='go']")
     public WebElement submit;
 

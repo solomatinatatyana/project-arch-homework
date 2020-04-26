@@ -9,7 +9,7 @@ import ru.otus.homework.projectarchhomework.pagesandblocks.pages.LoginPage;
 import ru.otus.homework.projectarchhomework.pagesandblocks.pages.MainPage;
 
 @Service
-public class AuthorizationServiceImpl implements AuthorizationService{
+public class AuthorizationServiceImpl implements AuthorizationService {
     public LoginPage loginPage;
     public MainPage mainPage;
 
@@ -19,14 +19,14 @@ public class AuthorizationServiceImpl implements AuthorizationService{
         this.mainPage = mainPage;
     }
 
-    public void login(String url, String login, String password){
+    public void login(String url, String login, String password) {
         loginPage.driver.get(url);
         loginUI(login, password);
     }
 
     private void loginUI(String login, String password) {
         loginPage.signButton.click();
-        WebDriverWait wait = (new WebDriverWait(loginPage.driver,50L));
+        WebDriverWait wait = (new WebDriverWait(loginPage.driver, 50L));
         wait.until(ExpectedConditions.visibilityOfAllElements(
                 loginPage.username,
                 loginPage.pass,
@@ -53,23 +53,23 @@ public class AuthorizationServiceImpl implements AuthorizationService{
     @Override
     @Step("Разлогин")
     public void logout() {
-        WebDriverWait wait = (new WebDriverWait(mainPage.driver,50L));
+        WebDriverWait wait = (new WebDriverWait(mainPage.driver, 50L));
         wait.until(ExpectedConditions.visibilityOfAllElements(mainPage.userProfileButton));
         mainPage.userProfileButton.click();
         mainPage.profileSettingBlock.logoutButton.click();
-        WebDriverWait wait2 = new WebDriverWait(mainPage.driver,100L);
+        WebDriverWait wait2 = new WebDriverWait(mainPage.driver, 100L);
         wait2.until(ExpectedConditions.visibilityOfAllElements(loginPage.signButton));
     }
 
     @Override
     @Step("Переход на сайт {url}")
-    public void open(String url){
+    public void open(String url) {
         loginPage.driver.get(url);
     }
 
     @Override
     @Step("Переход на страницу авторизации сайта -  {url}")
-    public void goToLoginPage(String url){
+    public void goToLoginPage(String url) {
         this.open(url);
         loginPage.signButton.click();
     }

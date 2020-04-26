@@ -18,7 +18,7 @@ public class WebApplicationServiceImpl implements WebApplicationService {
     @Override
     public WebDriver initDriver(BrowserType browser, MutableCapabilities options) {
         WebDriver driver = null;
-        switch (browser){
+        switch (browser) {
             case CHROME:
                 WebDriverManager.chromedriver().setup();
                 ChromeOptions chromeOptions = new ChromeOptions();

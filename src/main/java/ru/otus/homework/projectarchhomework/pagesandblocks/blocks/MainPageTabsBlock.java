@@ -27,7 +27,7 @@ public class MainPageTabsBlock extends AbstractPage {
     @FindBy(xpath = ".//a[h3[contains(text(),'Авторы')]]")
     public WebElement authorsButton;
 
-    @FindBy(xpath= ".//a[h3[contains(text(),'Компании')]]")
+    @FindBy(xpath = ".//a[h3[contains(text(),'Компании')]]")
     public WebElement companyButton;
 
     @FindBy(xpath = ".//a[contains(text(),'Все подряд')]")

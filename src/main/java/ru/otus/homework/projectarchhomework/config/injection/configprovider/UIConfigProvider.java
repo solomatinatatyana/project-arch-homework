@@ -7,10 +7,10 @@ import ru.otus.homework.projectarchhomework.config.injection.interfaces.UIConfig
 public class UIConfigProvider implements Provider<UIConfig> {
     @Override
     public UIConfig get() {
-        return new LocalConfig(ConfigFactory.create(UIConfig.class,System.getProperties()));
+        return new LocalConfig(ConfigFactory.create(UIConfig.class, System.getProperties()));
     }
 
-    public static class LocalConfig implements UIConfig{
+    public static class LocalConfig implements UIConfig {
         UIConfig config;
 
         public LocalConfig(UIConfig config) {

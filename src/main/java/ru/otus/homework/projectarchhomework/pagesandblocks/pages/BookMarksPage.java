@@ -14,7 +14,7 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 
 @Component
-public class BookMarksPage extends AbstractPage{
+public class BookMarksPage extends AbstractPage {
 
     public BookMarksPage(WebDriver driver) {
         super(driver);
@@ -28,7 +28,7 @@ public class BookMarksPage extends AbstractPage{
     public List<WebElement> bookmarkButtonIsAddedLocator;
 
     @Step("Удалить посты из закладок")
-    public void deletePostFromBookMarks(){
+    public void deletePostFromBookMarks() {
         ((JavascriptExecutor) driver).executeScript("window.scrollBy(0,2000)");
         this.bookmarkButtonIsAddedLocator.get(0).click();
     }

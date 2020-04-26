@@ -21,7 +21,7 @@ import ru.otus.homework.projectarchhomework.config.Config;
 import ru.otus.homework.projectarchhomework.pagesandblocks.pages.MainPage;
 import ru.otus.homework.projectarchhomework.services.auth.AuthorizationService;
 
-@SpringBootTest(classes =  ProjectArchHomeworkApplication.class)
+@SpringBootTest(classes = ProjectArchHomeworkApplication.class)
 @ContextConfiguration(classes = Config.class)
 @Epic("Spring Tests")
 @Feature("Тесты без авторизации")
@@ -37,36 +37,38 @@ public class MainPageTest extends BaseWebDrivingTest {
 
     @DataProvider(name = "filters")
     public Object[][] Filters() {
-        return new Object[][] {
+        return new Object[][]{
                 {mainPage.mainPageTabsBlock.more10Button, 10},
                 {mainPage.mainPageTabsBlock.more25Button, 25},
                 {mainPage.mainPageTabsBlock.more50Button, 50},
                 {mainPage.mainPageTabsBlock.more100Button, 100}
-        };}
+        };
+    }
 
     @BeforeClass(alwaysRun = true)
-    public void init(){
+    public void init() {
         authorizationService.open(config.getUrl());
         mainPage.goToNavPage(mainPage.mainNavBarBlock.allButton);
     }
 
     @Description("Проверить, что на странице отображается 20 постов")
     @Test()
-    public void checkCountPosts(){
+    public void checkCountPosts() {
         log.info("Провера количетсва постов на странице...");
-        Assert.assertEquals(mainPage.postPreviewList.size(),20,
+        Assert.assertEquals(mainPage.postPreviewList.size(), 20,
                 "На странице неверное количество постов");
 
     }
+
     // >=10, >=25, >=50, >=100
     @Description("Отфильтровать посты по рейтингу. " +
             "Проверить, что отображаются посты в соответствии с установленным фильтром")
     @Test(dependsOnMethods = "checkCountPosts", dataProvider = "filters",
             alwaysRun = true)
-    public void checkRatingInPosts(WebElement filterButton, int count){
-        log.info("Проверка фильтра [{}]",filterButton.getText());
+    public void checkRatingInPosts(WebElement filterButton, int count) {
+        log.info("Проверка фильтра [{}]", filterButton.getText());
         mainPage.filterPosts(filterButton);
-        mainPage.postsStatsList.forEach(e->{
+        mainPage.postsStatsList.forEach(e -> {
             int result = Integer.parseInt(e.getText());
             softAssert.assertTrue(result >= count, "Отобрались посты с рейтингом меньше " + count);
         });

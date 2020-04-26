@@ -16,7 +16,7 @@ import ru.otus.homework.projectarchhomework.pagesandblocks.blocks.CompanySideBar
 import java.util.List;
 
 @Component
-public class CompanyPage extends AbstractPage{
+public class CompanyPage extends AbstractPage {
 
     @Autowired
     public CompanySideBarBlock companySideBarBlock;
@@ -44,27 +44,27 @@ public class CompanyPage extends AbstractPage{
     public WebElement unsubscribeButton;
 
     @Step("Найти компанию")
-    public void searchCompany(String company){
-        WebDriverWait wait = new WebDriverWait(driver,50L);
+    public void searchCompany(String company) {
+        WebDriverWait wait = new WebDriverWait(driver, 50L);
         wait.until(ExpectedConditions.visibilityOfAllElements(this.searchCompanyTextInput));
         searchCompanyTextInput.clear();
         searchCompanyTextInput.sendKeys(company);
-        WebDriverWait wait2 = new WebDriverWait(driver,50L);
-        wait2.until(ExpectedConditions.numberOfElementsToBeLessThan(this.companies,10));
+        WebDriverWait wait2 = new WebDriverWait(driver, 50L);
+        wait2.until(ExpectedConditions.numberOfElementsToBeLessThan(this.companies, 10));
     }
 
     @Step("Подписаться/отписаться")
-    public void subscribe(String actions){
+    public void subscribe(String actions) {
         Actions action = new Actions(driver);
         action.moveToElement(companyRightGrid).build().perform();
-        switch (actions){
+        switch (actions) {
             case "follow":
-                WebDriverWait wait = new WebDriverWait(driver,50L);
+                WebDriverWait wait = new WebDriverWait(driver, 50L);
                 wait.until(ExpectedConditions.visibilityOfAllElements(this.subscribeButton));
                 action.moveToElement(subscribeButton).click().build().perform();
                 break;
             case "unfollow":
-                WebDriverWait wait2 = new WebDriverWait(driver,50L);
+                WebDriverWait wait2 = new WebDriverWait(driver, 50L);
                 wait2.until(ExpectedConditions.visibilityOfAllElements(this.unsubscribeButton));
                 action.moveToElement(unsubscribeButton).click().build().perform();
                 break;
@@ -73,15 +73,15 @@ public class CompanyPage extends AbstractPage{
     }
 
     @Step("Отфильтровать компании по тематике")
-    public void filterCompanyByTopic(WebElement topicButton){
-        WebDriverWait wait = new WebDriverWait(driver,50L);
+    public void filterCompanyByTopic(WebElement topicButton) {
+        WebDriverWait wait = new WebDriverWait(driver, 50L);
         wait.until(ExpectedConditions.visibilityOfAllElements(topicButton));
         topicButton.click();
     }
 
     @Step("Получить количество компаний по тематике")
-    public int getCountCompaniesByTopic(WebElement topicButton){
-        return  Integer.parseInt(topicButton.findElement(this.companySideBarBlock.countTopics).getText());
+    public int getCountCompaniesByTopic(WebElement topicButton) {
+        return Integer.parseInt(topicButton.findElement(this.companySideBarBlock.countTopics).getText());
     }
 
 }

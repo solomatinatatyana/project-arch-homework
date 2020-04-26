@@ -13,5 +13,7 @@ public enum SocialNetworks {
         this.color = color;
     }
 
-    public String getColor() { return color; }
+    public String getColor() {
+        return color;
+    }
 }

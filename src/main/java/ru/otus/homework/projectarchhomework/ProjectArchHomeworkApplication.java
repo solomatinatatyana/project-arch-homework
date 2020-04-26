@@ -8,7 +8,7 @@ import org.springframework.context.annotation.Bean;
 import ru.otus.homework.projectarchhomework.config.Config;
 
 @SpringBootApplication
-public class ProjectArchHomeworkApplication{
+public class ProjectArchHomeworkApplication {
 
     public static void main(String[] args) {
         ConfigurableApplicationContext ctx = SpringApplication.run(ProjectArchHomeworkApplication.class, args);
