@@ -40,10 +40,13 @@ node {
                             openTasksPublisher(disabled: true),
                             spotbugsPublisher(disabled: true),
                             pipelineGraphPublisher(disabled: true)
-                    ])
+                    ]){
+                bat 'echo Run'
+                bat label: '', script: 'mvn clean test -Dbrowser='+BROWSER
+            }
 
-            bat 'echo Run'
-            bat label: '', script: 'mvn clean test -Dbrowser='+BROWSER
+            //bat 'echo Run'
+            //bat label: '', script: 'mvn clean test -Dbrowser='+BROWSER
             //runTests:{build 'Test'}
         }
     }catch(ex){
