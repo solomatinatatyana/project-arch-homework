@@ -27,20 +27,8 @@ node {
         }
 
         stage('Run Tests') {
-            withMaven(maven: 'Maven 3.6.3',
-                    options: [
-                            junitPublisher(disabled: true, healthScaleFactor: 1.0),
-                            concordionPublisher(disabled: true),
-                            dependenciesFingerprintPublisher(disabled: true),
-                            findbugsPublisher(disabled: true),
-                            invokerPublisher(disabled: true),
-                            artifactsPublisher(disabled: true),
-                            jgivenPublisher(disabled: true),
-                            mavenLinkerPublisher(disabled: true),
-                            openTasksPublisher(disabled: true),
-                            spotbugsPublisher(disabled: true),
-                            pipelineGraphPublisher(disabled: true)
-                    ]){
+            withMaven(maven: 'Maven 3.6.3')
+                    {
                 bat 'echo Run'
                 bat label: '', script: 'mvn clean test -Dbrowser='+BROWSER
             }
