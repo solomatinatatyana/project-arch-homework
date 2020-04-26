@@ -22,6 +22,16 @@ node {
                         pipelineTriggers([githubPush(), cron('00 01 * * *')
                         ])
             ])
+            def jobUrl = "http://localhost:8080/me/my-views/view/all/job/Pipline_Smoke_Second2/"
+            withCredentials([string(credentialsId: 'd5d10259-3cc5-4d43-b265-484d8a048b41', variable: 'auth_token')]) {
+                def handle = triggerRemoteJob job: jobUrl,
+                        blockBuildUntilComplete: true,
+                        shouldNotFailBuild: true,
+                        parameters: "BROWSER=$BROWSER",
+                        auth: TokenAuth(apiToken: env.TOKEN, userName: env.USERNAME)
+
+                echo "Remote tests status: ${handle.buildStatus.toString()}"
+            }
             checkout([$class: 'GitSCM', branches: [[name: '*/master']],  userRemoteConfigs: [[credentialsId: '62b53291-36d6-4ccb-95cf-efa68b08f788', url: 'https://github.com/solomatinatatyana/project-arch-homework']]])
         }
 
