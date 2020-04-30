@@ -19,7 +19,7 @@ node {
                                 [string(defaultValue: 'CHROME', description: '', name: 'BROWSER', trim: false),
                                  gitParameter(branch: '', branchFilter: '.*', defaultValue: 'origin/master', description: '', name: 'BRANCH', quickFilterEnabled: false, selectedValue: 'NONE', sortMode: 'NONE', tagFilter: '*', type: 'PT_BRANCH')
                                 ]),
-                        pipelineTriggers([githubPush(), cron('00 01 * * *')
+                        pipelineTriggers([githubPush(), cron('H 1 * * *')
                         ])
             ])
             checkout([$class: 'GitSCM', branches: [[name: '*/master']],  userRemoteConfigs: [[credentialsId: '62b53291-36d6-4ccb-95cf-efa68b08f788', url: 'https://github.com/solomatinatatyana/project-arch-homework']]])
